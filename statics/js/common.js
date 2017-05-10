@@ -227,8 +227,7 @@ function uphtml(_obj,obj,url){
 * div 接收域类名
 * num 上传的数量
 */
-function fileActive(data,div,num,fileext,type = 0){
-	console.log(type);
+function fileActive(data,div,num,fileext){
 	if(num=='1'){
 		div.find("input").val("").val(data.url);
 		layer.closeAll();
