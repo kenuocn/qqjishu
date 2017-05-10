@@ -1,0 +1,47 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated fadeIn">
+  <div class="row">
+  	<div class="col-sm-3">
+      <div class="widget style1 yellow-bg">
+        <div class="row">
+          <div class="col-xs-4"> <i class="fa fa-files-o fa-5x"></i> </div>
+          <div class="col-xs-8 text-right"> <span> 文章 </span>
+            <h2 class="font-bold">{$article_count_1}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="widget style1 lazur-bg">
+        <div class="row">
+          <div class="col-xs-4"> <i class="fa fa-list fa-5x"></i> </div>
+          <div class="col-xs-8 text-right"> <span> 待审核文章 </span>
+            <h2 class="font-bold">{$article_count_0}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="widget style1 navy-bg">
+        <div class="row">
+          <div class="col-xs-4"> <i class="fa fa-user fa-5x"></i> </div>
+          <div class="col-xs-8 text-right"> <span> 会员数 </span>
+            <h2 class="font-bold">{$user_count}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="widget style1 red-bg">
+        <div class="row">
+          <div class="col-xs-4"> <i class="fa fa-comments fa-5x"></i> </div>
+          <div class="col-xs-8 text-right"> <span> 评论数 </span>
+            <h2 class="font-bold">12</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    {:hook('AdminIndex')}
+  </div>
+</div>
+</body></html>

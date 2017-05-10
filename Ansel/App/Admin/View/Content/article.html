@@ -1,0 +1,149 @@
+<include file="Public/header"/>
+<link href="$public/js/datepicker/datepicker.css" rel="stylesheet">
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"> <include file="Public/nav"/> </div>
+        <div class="ibox-content">
+          <div class="row m-b-sm m-t-sm">
+            <form class="form-horizontal m-t" action="{:U('Content/article')}" method="get">
+              <input type="hidden" name="m" value="Admin">
+              <input type="hidden" name="c" value="Content">
+              <input type="hidden" name="a" value="article">
+              <div class="col-md-2">
+                <div class="input-group"  style="width:100%;">
+                  <select class="form-control m-b" name="catid" style="width:99%;padding:0;">
+                    <option value="">全部分类</option>
+                    <volist name="sort" id="vo"> 
+                    	<option value="{$vo.id}" <if condition="$catid eq $vo['id']">selected</if>>{$vo.catname}</option>
+                    </volist>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group" style="width:100%;">
+                  <div id="datejs">
+                    <div class="input-daterange input-group" id="datepicker" style="float:left">
+                      <input type="text" class="form-control" name="starttime" id="starttime" value="{$starttime}" placeholder="开始时间"/>
+                      <span class="input-group-addon">-</span>
+                      <input type="text" class="form-control" name="endtime" id="endtime" value="{$endtime}" placeholder="结束时间"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group" style="width:100%;"> 
+                  <input type="text" name="title" value="{$title}" placeholder="标题关键词" class="form-control" >
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group"> <span class="input-group-btn">
+                  <button type="submit" class="btn btn-primary"> 搜索</button>
+                  <button type="reset" class="btn btn-default"> 清空</button>
+                  </span> </div>
+              </div>
+            </form>
+          </div>
+          <form class="form-horizontal m-t" action="{:U('Content/article')}" method="post" id="commentForm">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="text-align:center;width:1%"> <input type="checkbox" class="i-checks" id="chkall"></th>
+                  <th style="text-align:center;width:2%">排序</th>
+                  <th style="text-align:center;width:2%">ID</th>
+                  <th style="width:6%">标题</th>
+                  <th style="text-align:center;width:3%">分类</th>
+                  <th style="text-align:center;width:2%">作者</th>
+                  <th style="text-align:center;width:3%">时间</th>
+                  <th style="text-align:center;width:2%">阅读</th>
+                  <th style="text-align:center;width:2%">评论</th>
+                  <th style="text-align:center;width:1%">状态</th>
+                  <th style="text-align:center;width:1%">推荐</th>
+                  <th style="text-align:center;width:1%">置顶</th>
+                  <th style="text-align:center;width:5%">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <volist name="data['list']" id="vo">
+                  <tr class="float-e-margins">
+                    <td style="text-align:center;width:1%"><input type="checkbox" id="ck_id" class="i-checks" name="checkid[]"  value="{$vo.id}"></td>
+                    <td><input type="text" name="listorder[{$vo.id}]" value="{$vo.listorder}" class="form-control" style="text-align:center;"></td>
+                    <td style="text-align:center">{$vo.id}</td>
+                    <td>{$vo.title|str_cut=###,10} <if condition="$vo['thumb']"><img src="$public/images/small_img.gif"></if></td>
+                    <td style="text-align:center">{$vo.catname}</td>
+                    <td style="text-align:center">{$vo.author}</td>
+                    <td style="text-align:center">{$vo.time|friendlyDate=###}</td>
+                    <td style="text-align:center">{$vo.views} 次</td>
+                    <td style="text-align:center">{$vo.comments} 次</td>
+                    <td style="text-align:center">
+                    	<if condition="$vo['status'] eq 1"> 
+                    	<a class="btn mg0 btn-info btn-xs" onClick="SetStatus(this,'info','status','{$vo.id}','0','{:U('Content/status_article')}')">显示</a>
+                        <else/>
+                        <a class="btn mg0 btn-danger btn-xs" onClick="SetStatus(this,'danger','status','{$vo.id}','1','{:U('Content/status_article')}')">显示</a> 
+                        </if>
+                    </td>
+                    <td style="text-align:center">
+                    	<if condition="$vo['rec'] eq 1"> 
+                    	<a class="btn mg0 btn-info btn-xs" onClick="SetStatus(this,'info','rec','{$vo.id}','0','{:U('Content/status_article')}')">推荐</a>
+                        <else/>
+                        <a class="btn mg0 btn-danger btn-xs" onClick="SetStatus(this,'danger','rec','{$vo.id}','1','{:U('Content/status_article')}')">推荐</a> 
+                        </if>
+                    </td>
+                    <td style="text-align:center">
+                    	<if condition="$vo['top'] eq 1"> 
+                    	<a class="btn mg0 btn-info btn-xs" onClick="SetStatus(this,'info','top','{$vo.id}','0','{:U('Content/status_article')}')">置顶</a>
+                        <else/>
+                        <a class="btn mg0 btn-danger btn-xs" onClick="SetStatus(this,'danger','top','{$vo.id}','1','{:U('Content/status_article')}')">置顶</a> 
+                        </if>
+                    </td>
+                    <td style="text-align:center">
+                    <a href="{:U('Content/edit_sort',array('id'=>$vo['id']))}" class="btn mg0 btn-info btn-xs"><i class="fa fa-comments"></i> 评论</a> 
+                    <a href="{:U('Content/edit_article',array('id'=>$vo['id']))}" class="btn mg0 btn-primary btn-xs"><i class="fa fa-paste"></i> 编辑</a> 
+                    <a href="{:U('Content/del_article',array('id'=>$vo['id']))}" class="btn mg0 btn-danger btn-xs J_del"><i class="fa fa-times"></i> 删除</a>
+                    </td>
+                  </tr>
+                </volist>
+              </tbody>
+            </table>
+            {$data['page']}
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-3">
+                <button class="btn btn-primary" type="submit">保存排序</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script> 
+<include file="Public/footer"/>
+<script src="$public/js/datepicker/datepicker.js"></script> 
+<script>
+$(function(){
+	//时间选择
+    $("#datejs .input-daterange").datepicker({
+        keyboardNavigation: !1,
+        forceParse: !1,
+        autoclose: !0,
+    }); {
+        var i = document.querySelector(".js-switch"),
+        t = (new Switchery(i, {
+            color: "#1AB394"
+        }), document.querySelector(".js-switch_2")),
+        a = (new Switchery(t, {
+            color: "#ED5565"
+        }), document.querySelector(".js-switch_3"));
+        new Switchery(a, {
+            color: "#1AB394"
+        })
+    }
+});
+</script> 
+
+</body></html>

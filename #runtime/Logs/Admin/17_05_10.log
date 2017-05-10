@@ -1,0 +1,28 @@
+[ 2017-05-10T23:38:50+08:00 ] 127.0.0.1 /index.php?m=admin&c=index&a=cache
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000808s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001261s ]
+NOTIC: [2] Missing argument 1 for getGroups(), called in E:\php\Apache24\htdocs\Ansel\Ansel\Common\Controller\AdminBase.class.php on line 20 and defined E:\php\Apache24\htdocs\Ansel\Ansel\App\Admin\Common\function.php 第 87 行.
+NOTIC: [8] Undefined variable: uid E:\php\Apache24\htdocs\Ansel\Ansel\App\Admin\Common\function.php 第 88 行.
+SQL: SHOW COLUMNS FROM `an_auth_group_access` [ RunTime:0.0047s ]
+SQL: SELECT `id` FROM an_auth_group_access a INNER JOIN an_auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' ) LIMIT 1   [ RunTime:0.0003s ]
+NOTIC: [2] Missing argument 1 for isuser(), called in E:\php\Apache24\htdocs\Ansel\Ansel\Common\Controller\AdminBase.class.php on line 23 and defined E:\php\Apache24\htdocs\Ansel\Ansel\App\Admin\Common\function.php 第 97 行.
+NOTIC: [8] Undefined variable: uid E:\php\Apache24\htdocs\Ansel\Ansel\App\Admin\Common\function.php 第 98 行.
+SQL: SHOW COLUMNS FROM `an_user` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `an_user` WHERE `id` = 1 AND `status` = 1 LIMIT 1   [ RunTime:0.0003s ]
+SQL: SELECT `session_id` FROM `an_user` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SELECT `session_id` FROM `an_user` WHERE `id` = 1 LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `an_auth_group_access` [ RunTime:0.0028s ]
+SQL: SELECT `id` FROM an_auth_group_access a INNER JOIN an_auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' ) LIMIT 1   [ RunTime:0.0001s ]
+SQL: SHOW COLUMNS FROM `an_auth_group_access` [ RunTime:0.0032s ]
+SQL: SELECT `id` FROM an_auth_group_access a INNER JOIN an_auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' ) LIMIT 1   [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `an_auth_group_access` [ RunTime:0.0027s ]
+SQL: SELECT `id` FROM an_auth_group_access a INNER JOIN an_auth_group g on a.group_id=g.id  WHERE ( a.uid='1' and g.status='1' ) LIMIT 1   [ RunTime:0.0001s ]
+NOTIC: [2] Missing argument 1 for Dir::__construct(), called in E:\php\Apache24\htdocs\Ansel\Ansel\App\Admin\Controller\IndexController.class.php on line 43 and defined E:\php\Apache24\htdocs\Ansel\Ansel\Libs\Dir\Dir.class.php 第 39 行.
+NOTIC: [8] Undefined variable: path E:\php\Apache24\htdocs\Ansel\Ansel\Libs\Dir\Dir.class.php 第 40 行.
+NOTIC: [8] Undefined variable: path E:\php\Apache24\htdocs\Ansel\Ansel\Libs\Dir\Dir.class.php 第 41 行.
+SQL: SHOW COLUMNS FROM `an_operationlog` [ RunTime:0.0219s ]
+NOTIC: [8] Undefined index: validate E:\php\Apache24\htdocs\Ansel\Ansel\Core\Library\Think\Model.class.php 第 1185 行.
+NOTIC: [8] Undefined index: auto E:\php\Apache24\htdocs\Ansel\Ansel\Core\Library\Think\Model.class.php 第 1128 行.
+SQL: INSERT INTO `an_operationlog` (`uid`,`status`,`info`,`get`,`time`,`ip`) VALUES ('1','1','提示语：站点缓存清理成功！<br/>模块：Admin,控制器：Index,方法：cache<br/>请求方式：Ajax','http://www.test.com/index.php?m=admin&c=index&a=index','1494430730','127.0.0.1') [ RunTime:0.0139s ]
+

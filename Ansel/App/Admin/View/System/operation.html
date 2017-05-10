@@ -1,0 +1,48 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+        <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="text-align:center">ID</th>
+                <th style="text-align:center">UID</th>
+                <th style="text-align:center">状态</th>
+                <th>说明</th>
+                <th>GET</th>
+                <th style="text-align:center">时间</th>
+                <th style="text-align:center">IP</th>
+              </tr>
+            </thead>
+            <tbody>
+			<volist name="data['list']" id="vo">
+              <tr>
+                <td style="text-align:center">{$vo.id}</td>
+                <td style="text-align:center">{$vo.uid}</td>
+                <td style="text-align:center"><if condition="$vo['status'] eq '1'">success<else/>error</if></td>
+                <td>{$vo.info}</td>
+                <td>{$vo.get}</td>
+                <td style="text-align:center">{$vo.time|date="Y-m-d H:i:s",###}</td>
+                <td style="text-align:center">{$vo.ip}</td>
+              </tr>
+			</volist>
+            </tbody>
+          </table>
+          {$data['page']}    
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script>
+</body>
+</html> 

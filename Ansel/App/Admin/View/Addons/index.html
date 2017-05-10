@@ -1,0 +1,65 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+        <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="text-align:center">插件名称</th>
+                <th style="text-align:center">插件标识</th>
+                <th style="text-align:center">插件描述</th>
+                <th style="text-align:center">状态</th>
+                <th style="text-align:center">作者</th>
+                <th style="text-align:center">版本</th>
+                <th style="text-align:center;">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+			<volist name="data['list']" id="vo">
+              <tr>
+                <td style="text-align:center"><if condition="$vo['url']"><a  href="{$vo.url}" target="_blank">{$vo.title}</a><else/>{$vo.title}</if></td>
+                <td style="text-align:center">{$vo.name}</td>
+                <td style="text-align:center">{$vo.description}</td>
+                <td style="text-align:center"><if condition="$vo['status'] eq 0">未安装<else/>正常</if></td>
+                <td style="text-align:center">{$vo.author}</td>
+                <td style="text-align:center">{$vo.version}</td>
+                <td style="text-align:center;">
+                <if condition="$vo['uninstall']">
+                  <a  href="{:U('Addons/install', array('addon_name'=>$vo['name'])  )}" class="J_alink btn mg0 btn-success btn-xs">安装</a>
+                <else/>
+                  <if condition="unserialize($vo['config'])">
+                  <a  href="{:U('Addons/config', array('id'=>$vo['id'])  )}" class="btn mg0 btn-primary btn-xs">设置</a>
+                  <else/>
+                  <a  href="javascript:;" class="J_alink btn mg0 btn-default btn-xs">设置</a>
+                  </if>
+                  <if condition="$vo['status']">
+                  <a  href="{:U('Addons/status_addon', array('id'=>$vo['id'],'status'=>0))}" class="J_alink btn mg0 btn-danger btn-xs">禁用</a>
+                  <else/>
+                  <a  href="{:U('Addons/status_addon', array('id'=>$vo['id'],'status'=>1))}" class="J_alink btn mg0 btn-info btn-xs">启用</a>
+                  </if>
+                  <a  href="{:U('Addons/uninstall', array('id'=>$vo['id'])  )}" class="J_alink btn mg0 btn-danger btn-xs">卸载</a>
+                </if>
+                  <a  href="{:U('Addons/unpack', array('addon_name'=>$vo['name'])  )}" class="btn mg0 btn-success btn-xs">打包</a>
+                </td>
+              </tr>
+			</volist>
+            </tbody>
+          </table>
+          {$data['page']}  
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script>
+</body>
+</html> 

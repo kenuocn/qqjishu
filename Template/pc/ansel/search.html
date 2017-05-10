@@ -1,0 +1,44 @@
+<temp file="header.html"/>
+<body class="home blog uimo ui-c3">
+<section class="container">
+  <temp file="left.html"/>
+  <div class="content-wrap">
+    <div class="content">
+     <h1 class="title"><strong><a href="">{$skey} 的搜索结果</a></strong></h1>
+     <Ansel m="search" skey="$skey" num="10" order="listorder DESC" page="$page">  
+     <if condition="empty($data)">
+     <h3 class="text-muted text-center">暂无搜索结果</h3>
+     </if>
+      <volist name="data" id="vo">
+      <article class="excerpt excerpt-<if condition="$vo['thumb_num'] eq 1">one<else/>multi</if>">
+        <header>
+        	<a class="cat label label-important" href="{$vo.caturl}">{$vo.catname}<i class="label-arrow"></i></a>
+          	<h2><a target="_blank" href="{$vo.url}" title="{$vo.title}">{$vo.title|str_cut=###,20}</a></h2>
+            <small class="text-muted"><span class="glyphicon glyphicon-picture"></span>{$vo.thumb_num}</small>
+        </header>
+        <p class="text-muted time">{$vo.author} 发布于 {$vo.time|date="Y-m-d",###}</p>
+        <p class="focus">
+            <a target="_blank" href="{$vo.url}" class="thumbnail">
+            <volist name="vo['thumb']" id="thumb">
+                <span class="item">
+                    <span class="thumb-span"><img data-original="{$thumb}" class="thumb"/></span>
+                </span>
+            </volist>
+            </a>
+        </p>
+        <p class="note">{$vo.description|str_cut=###,200}</p>
+        <p class="text-muted views">
+        <span class="post-views">阅读({$vo.views})</span>
+        <span class="post-comments">评论({$vo.comments})</span>
+        </p>
+      </article>
+      </volist> 
+      </Ansel>
+      
+      <div class="pagination pagination-multi">{$pages}</div>
+    </div>
+  </div>
+  <temp file="sidebar.html"/>
+  <temp file="footer.html"/>
+</section>
+<temp file="foot.html"/>

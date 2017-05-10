@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+<meta name="keywords" content="{$sitekeywords}" />
+<meta name="description" content="{$sitecontent}" />
+<title>{$sitetitle}</title>
+<link rel="stylesheet" href="{$BLOG_URL}css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+</head>
+<body>
+<div class="cotn_principal">
+  <div class="cont_centrar">
+    <div class="cont_login">
+      <div class="cont_info_log_sign_up">
+        <div class="col_md_login">
+          <div class="cont_ba_opcitiy">
+            <h2>登陆</h2>
+            <p>已注册过可以直接登陆</p>
+            <button class="btn_login" onClick="cambiar_login()">登陆</button>
+          </div>
+        </div>
+        <div class="col_md_sign_up">
+          <div class="cont_ba_opcitiy">
+            <h2>注册</h2>
+            <p>同鞋快填资料注册吧！</p>
+            <button class="btn_sign_up" onClick="cambiar_sign_up()">注册</button>
+          </div>
+        </div>
+      </div>
+      <div class="cont_back_info">
+        <div class="cont_img_back_grey"> <img src="{$BLOG_URL}images/po.jpg"/> </div>
+      </div>
+      <div class="cont_forms" >
+        <div class="cont_img_back_"> <img src="{$BLOG_URL}images/po.jpg"/> </div>
+        <div class="cont_form_login"> <a href="JavaScript:;" onClick="ocultar_login_sign_up()" ><i class="material-icons">&#xE5C4;</i></a>
+          <h2>登陆</h2>
+          <input type="text" placeholder="用户名" id="login_username" />
+          <input type="password" placeholder="密码" id="login_password"/>
+          <button class="btn_login" onClick="login(this)">登陆</button>
+        </div>
+        <div class="cont_form_sign_up"> <a href="JavaScript:;" onClick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
+          <h2>注册</h2>
+          <input type="text" placeholder="用户名" id="reg_username"/>
+          <input type="text" placeholder="姓名" id="reg_name"/>
+          <input type="email" placeholder="邮箱（会验证的哦）" id="reg_email"/>
+          <input type="password" placeholder="密码" id="reg_password"/>
+          <input type="password" placeholder="重复密码" id="reg_password1"/>
+          <button class="btn_sign_up" onClick="reg(this)">注册</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/jquery.js"></script>
+<script src="{$BLOG_URL}js/index.js"></script>
+<script src="$public/js/layui/layui.js"></script> 
+<script>
+//登陆
+function login(obj){
+	layui.use('layer', function(){ 
+	var layer = layui.layer;
+		var username=$('#login_username').val();
+		if(!username){layer.msg('请输入用户名');$('#login_username').focus();return false;};
+		var password=$('#login_password').val();
+		if(!password){layer.msg('请输入密码');$('#login_password').focus();return false;};
+		$(obj).val("登陆中..");
+		$.ajax({   
+			url : '{:U("Index/Login/login")}',  
+			type : "post",  
+			dataType : "json",  
+			data: {username:username,password:password},  
+			success : function(res) {  
+				if(res.status) {  
+					layer.alert(res.info,{title:'登陆成功',icon:1},function(){
+						location.href='{:U("Index/Layim/index")}';	
+					});
+				} else {  
+					layer.alert(res.info,{title:'错误提示',icon:0});
+					$(obj).val("登陆");
+				}  
+			}  
+		});  
+	});	
+}
+//注册
+function reg(obj){
+	layui.use('layer', function(){ 
+	var layer = layui.layer;
+		var username=$('#reg_username').val();
+		if(!username){layer.msg('请输入用户名');$('#reg_username').focus();return false;};
+		
+		var name=$('#reg_name').val();
+		if(!name){layer.msg('请输入你的姓名');$('#reg_name').focus();return false;};
+		
+		var email=$('#reg_email').val();
+		if(!email){layer.msg('请输入邮箱，会验证的噢');$('#reg_email').focus();return false;};
+		
+		var password=$('#reg_password').val();
+		if(!password){layer.msg('请输入密码');$('#reg_password').focus();return false;};
+		var password1=$('#reg_password1').val();
+		if(!password1){layer.msg('请再次输入密码');$('#reg_password1').focus();return false;};
+		if(password!=password1){
+			layer.msg('两次输入的密码不同');$('#reg_password1').focus();return false;	
+		}
+		$(obj).val("注册中..");
+		$.ajax({   
+			url : '{:U("Index/Login/reg")}',  
+			type : "post",  
+			dataType : "json",  
+			data: {username:username,name:name,email:email,password:password},  
+			success : function(res) {  
+				if(res.status) {  
+					layer.alert(res.info,{title:'注册成功',icon:1},function(){
+						location.href='{:U("Index/Layim/index")}';	
+					})
+				} else {  
+					layer.alert(res.info,{title:'错误提示',icon:0});
+					$(obj).val("注册");
+				}  
+			}  
+		});  
+	});	
+}
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,96 @@
+<temp file="header.html"/>
+<body class="home blog uimo ui-c3">
+<section class="container">
+  <temp file="left.html"/>
+  <div class="content-wrap">
+    <div class="content">
+      <div class="ads ads-content"></div>
+      <div id="slider" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#slider" data-slide-to="0" class="active"></li>
+          <li data-target="#slider" data-slide-to="1" class=""></li>
+          <li data-target="#slider" data-slide-to="2" class=""></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="item active">
+          <a href="#"><img src="{$ANSEL_URL}images/banner.png"><span class="carousel-caption">Ansel-博客系统</span><span class="carousel-bg"></span></a>
+          </div>
+          <div class="item">
+          <a href="#"><img src="{$ANSEL_URL}images/banner1.jpg"><span class="carousel-caption">Ansel-博客系统</span><span class="carousel-bg"></span></a>
+          </div>
+          <div class="item ">
+          <a href="#"><img src="{$ANSEL_URL}images/banner2.jpg"><span class="carousel-caption">Ansel-博客系统</span><span class="carousel-bg"></span></a>
+          </div>
+        </div> 
+        <a class="left carousel-control" href="#slider" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a><a class="right carousel-control" href="#slider" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></div>
+      <div class="focusmo">
+        <ul>
+        <Ansel m="lists" catid="0" num="5" where="top {eq} 1" order="id desc">
+            <volist name="data" id="vo">
+              <li <if condition="$key eq 0">class="large"</if>>
+              	<a target="_blank" href="{$vo.url}"><img class="thumb" data-original="{$vo['thumb'][0]}">
+                <h4>{$vo.title|str_cut=###,20}</h4>
+                </a>
+              </li>
+            </volist>
+        </Ansel>
+        </ul>
+      </div>
+      <div class="most-comment-posts">
+        <h3 class="title"><strong>一周热门排行</strong></h3>
+        <ul>
+        <Ansel m="lists" catid="0" num="5" where="views {gt} 300" order="id desc">
+        <volist name="data" id="vo">
+          <li>
+            <p class="text-muted"><span class="post-comments">阅读 ({$vo.views})</span></p>
+            <span class="label label-{$key*1+1}">{$vo.id}</span><a target="_blank" href="{$vo.url}" title="{$vo.title}">{$vo.title|str_cut=###,30}</a></li>
+          <li>
+        </volist>
+        </Ansel>
+        </ul>
+      </div>
+      <div class="sticky">
+        <h3 class="title"><strong>热门推荐</strong></h3>
+        <ul>
+        <Ansel m="lists" catid="0" num="4" where="rec {eq} 1" order="id desc"> 
+        <volist name="data" id="vo">
+          <li class="item"><a target="_blank" href="{$vo.url}"><img data-original="{$vo['thumb'][0]}" class="thumb" width="100%"/>{$vo.title|str_cut=###,20}</a></li>
+        </volist>
+        </Ansel>
+        </ul>
+      </div>
+      <div class="ads ads-content"></div>
+      <h3 class="title"><strong>最新发布</strong></h3>
+      <Ansel m="lists" catid="0" num="10" order="id desc" >  
+      <volist name="data" id="vo">
+      <article class="excerpt excerpt-<if condition="$vo['thumb_num'] eq 1">one<else/>multi</if>">
+        <header>
+        	<a class="cat label label-important" href="{$vo.caturl}">{:getCate($vo['catid'],'catname')}<i class="label-arrow"></i></a>
+          	<h2><a target="_blank" href="{$vo.url}" title="{$vo.title}">{$vo.title|str_cut=###,20}</a></h2>
+            <small class="text-muted"><span class="glyphicon glyphicon-picture"></span>{$vo.thumb_num}</small>
+        </header>
+        <p class="text-muted time">发布时间：{$vo.time|date="Y-m-d",###}</p>
+        <p class="focus">
+            <a target="_blank" href="{$vo.url}" class="thumbnail">
+            <volist name="vo['thumb']" id="thumb">
+                <span class="item">
+                    <span class="thumb-span"><img data-original="{$thumb}" class="thumb"/></span>
+                </span>
+            </volist>
+            </a>
+        </p>
+        <p class="note">{$vo.description|str_cut=###,200}</p>
+        <p class="text-muted views">
+        <span class="post-views">作者：{$vo.author}</span>
+        <span class="post-views">阅读：({$vo.views})</span>
+        <span class="post-comments">评论：({$vo.comments})</span>
+        </p>
+      </article>
+      </volist> 
+      </Ansel>
+    </div>
+  </div>
+  <temp file="sidebar.html"/>
+  <temp file="footer.html"/>
+</section>
+<temp file="foot.html"/>

@@ -1,0 +1,114 @@
+<include file="Public/header"/>
+<style>
+label.error{position:relative;margin-left:0;left:0;}
+</style>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"> <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+          <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">是否启用：</label>
+              <div class="col-sm-4" style="width: 75%;">
+                <div class="radio radio-info radio-inline">
+                  <input type="radio" id="status1" value="1" name="status" <if condition="$info['status'] eq 1">checked</if> required>
+                  <label for="status1">启用</label>
+                </div>
+                <div class="radio radio-inline">
+                  <input type="radio" id="status2" value="0" name="status" <if condition="$info['status'] eq 0">checked</if>>
+                  <label for="status2">禁用</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">默认分组：</label>
+              <div class="col-sm-4" style="width: 75%;">
+                 <select class="form-control" name="gid" style="width:99%">
+                 	<volist name="group_list" id="vo"> 
+                      <option value="{$vo.id}" <if condition="$info['gid'] eq $vo['id']">selected</if>>{$vo.name}</option>
+                    </volist>
+                 </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">用户名：</label>
+              <div class="col-sm-4" style="width: 75%;">
+              	<if condition="$info['id'] eq null">
+                <input type="text" name="username" step="1" value="{$info['username']}" class="form-control" required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 必须填写</span>
+                <else/>
+                <div  class="form-control">{$info['username']}</div>
+                </if>
+              </div>
+            </div>
+            <if condition="empty($info['id'])">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">密码：</label>
+              <div class="col-sm-4" style="width: 75%;">
+                <input type="text" name="password" value="" class="form-control" required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 必须填写,6-10位字母加数字</span>
+              </div>
+            </div>
+            </if>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">姓名：</label>
+              <div class="col-sm-4" style="width: 75%;">
+                <input type="text" name="name" value="{$info['name']}" class="form-control"  required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 必须填写</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">签名：</label>
+              <div class="col-sm-4" style="width: 75%;">
+                <input type="text" name="sign" value="{$info['sign']}" class="form-control">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 个性签名</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">邮箱：</label>
+              <div class="col-sm-4" style="width: 75%;">
+                <input type="email" name="email" value="{$info['email']}" class="form-control"  required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 必须填写</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">邮箱验证：</label>
+              <div class="col-sm-4" style="width: 75%;">
+                <div class="radio radio-info radio-inline">
+                  <input type="radio" id="email_test1" value="1" name="email_test" <if condition="$info['email_test'] eq 1">checked</if>>
+                  <label for="email_test1">已验证</label>
+                </div>
+                <div class="radio radio-inline">
+                  <input type="radio" id="email_test2" value="0" name="email_test" <if condition="$info['email_test'] eq 0">checked</if>>
+                  <label for="email_test2">未验证</label> 
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">赠送积分：</label>
+              <div class="col-sm-4" style="width: 75%;">
+                <input type="number" name="score" value="{$info['score']}" class="form-control">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 赠送积分</span>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-3 col-sm-offset-2">
+              	<input type="hidden" name="id" value="{$info.id}">
+                <button class="btn btn-primary" type="submit"><if condition="$info['id']">保存修改<else/>添加会员</if></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <include file="Public/nav"/>
+          <!--a class="btn btn-sm btn-success" href="{:U('Menu/auth')}">一键更新权限</a-->
+          <a class="J_alink btn btn-sm btn-success" href="{:U('Menu/Index',array('op'=>'cache'))}">更新菜单缓存</a>
+          <div class="ibox-tools"> <a class="collapse-link"> <i class="fa fa-chevron-up"></i> </a>
+            <a class="close-link"> <i class="fa fa-times"></i> </a> </div>
+        </div>
+        <div class="ibox-content">
+        <form class="form-horizontal m-t" action="{:U('Menu/Index')}" method="post" id="commentForm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="text-align:center;width:5%">排序</th>
+                <th style="text-align:center">ID</th>
+                <th style="text-align:center">图标</th>
+                <th>菜单名称</th>
+                <th>菜单地址</th>
+                <th style="text-align:center">权限</th>
+                <th style="text-align:center">状态</th>
+                <th style="text-align:center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+			<volist name="list" id="vo">
+              <tr class="float-e-margins">
+                <td><input type="text" name="listorder[{$vo.id}]" value="{$vo.listorder}" class="input-sm form-control" style="text-align:center;" required></td>
+                <td style="text-align:center">{$vo.id}</td>
+                <td style="text-align:center"><i class="fa fa-{$vo.fonts|default="desktop"}"></i></td>
+                <td>{$vo.name} <a href="{:U('Menu/add',array('pid'=>$vo['id']))}"><i class="fa fa-plus"></i></a></td>
+                <td>{$vo.app}/{$vo.controller}/{$vo.action}</td>
+                <td style="text-align:center">
+                    <if condition="$vo['type'] eq 1">
+                       <a class="J_alink btn mg0 btn-info btn-xs" href="{:U('Menu/type',array('id'=>$vo['id'],'type'=>0))}">权限控制</a>
+                    <else/>
+                       <a class="J_alink btn mg0 btn-success btn-xs"href="{:U('Menu/type',array('id'=>$vo['id'],'type'=>1))}">普通菜单</a>
+                    </if>
+                </td>
+                <td style="text-align:center">
+                    <if condition="$vo['status'] eq 1"> 
+                    	<a class="btn mg0 btn-info btn-xs" onClick="SetStatus(this,'info','status','{$vo.id}','0','{:U('Menu/status')}')">显示</a>
+                    <else/>
+                    	<a class="btn mg0 btn-danger btn-xs" onClick="SetStatus(this,'danger','status','{$vo.id}','1','{:U('Menu/status')}')">显示</a> 
+                    </if>
+                </td>
+                <td style="text-align:center">
+                   <a href="{:U('Menu/edit',array('id'=>$vo['id']))}" class="btn mg0 btn-primary btn-xs"><i class="fa fa-paste"></i> 编辑</a>
+                   <a href="{:U('Menu/del',array('id'=>$vo['id']))}" class="btn mg0 btn-danger btn-xs J_del"><i class="fa fa-times"></i> 删除</a>
+                </td>
+              </tr>
+			</volist>
+            </tbody>
+          </table>
+          <div class="hr-line-dashed"></div>
+          <div class="form-group">
+            <div class="col-sm-3">
+                <button class="btn btn-primary" type="submit">保存排序</button>
+             </div>
+          </div>            
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script>
+</body>
+</html> 

@@ -1,0 +1,44 @@
+<?php
+$open=$_GET['open'];
+if($open==2){
+?>
+<style>
+.ibox-title{display:none !important;}
+</style>
+<?php
+}
+?>
+<?php 
+$getMenu = D('Menu')->getmenunav(); 
+if($getMenu) {
+?>
+	<?php
+    foreach($getMenu as $v){
+        $app=$v['app'];
+        $controller=$v['controller'];
+        $action=$v['action'];
+        $ajax=$v['ajax'];
+        $width=$v['width'];
+        $height=$v['height'];
+    ?>
+    &nbsp;
+    <?php if($ajax==1): ?>
+    <a class="J_alink menuid btn btn-<?php echo $action==ACTION_NAME ?'info':"default"; ?> btn-sm" href="<?php echo U("".$app."/".$controller."/".$action."",$v['parameter']);?>">
+        <?php echo $v['name'] ;?>
+    </a>
+    <?php elseif($ajax==2): ?>
+    <a class="menuid btn btn-default btn-sm" onClick="layerfrm('<?php echo $v['name'] ;?>','<?php echo $v['width'];?>px','<?php echo $v['height'];?>px','<?php echo U("".$app."/".$controller."/".$action."",$v['parameter']);?>')">
+        <?php echo $v['name'] ;?>
+    </a>
+    <?php else: ?>
+    <a class="menuid btn btn-<?php echo $action==ACTION_NAME ?'info':"default"; ?> btn-sm" href="<?php echo U("".$app."/".$controller."/".$action."",$v['parameter']);?>">
+        <?php echo $v['name'] ;?>
+    </a>
+    <?php endif; ?>
+    <?php 
+    } 
+} 
+?>
+&nbsp;
+<a class="btn btn-success btn-sm" onclick="reloadPage(window)"><i class="fa fa-refresh"></i> 刷新</a>
+&nbsp;

@@ -1,0 +1,48 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+        <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="text-align:center">ID</th>
+                <th>用户名</th>
+                <th>密码</th>
+                <th style="text-align:center">状态</th>
+                <th style="text-align:center">其他说明</th>
+                <th style="text-align:center">时间</th>
+                <th style="text-align:center">IP</th>
+              </tr>
+            </thead>
+            <tbody>
+			<volist name="data['list']" id="vo">
+              <tr>
+                <td style="text-align:center">{$vo.id}</td>
+                <td>{$vo.username}</td>
+                <td>{$vo.password}</td>
+                <td style="text-align:center"><if condition="$vo['status'] eq 1">登陆成功<else /><font color="#FF0000">登陆失败</font></if></td>
+                <td style="text-align:center">{$vo.info}</td>
+                <td style="text-align:center">{$vo.logintime|date="Y-m-d H:i:s",###}</td>
+                <td style="text-align:center">{$vo.loginip}</td>
+              </tr>
+			</volist>
+            </tbody>
+          </table>
+         {$data['page']}     
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script>
+</body>
+</html> 

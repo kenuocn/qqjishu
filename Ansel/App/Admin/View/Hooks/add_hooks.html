@@ -1,0 +1,95 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"> <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+          <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">钩子类型：</label>
+              <div class="col-sm-4">
+                <div class="radio radio-info radio-inline">
+                  <input type="radio" id="type1" value="1" name="type" <if condition="$info['type'] eq 1">checked<else/>checked</if>>
+                  <label for="type1">视图</label>
+                </div>
+                <div class="radio radio-inline">
+                  <input type="radio" id="type2" value="2" name="type" <if condition="$info['type'] eq 2">checked</if>>
+                  <label for="type2">控制器</label>
+                </div>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 区分钩子的主要用途</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">钩子名称：</label>
+              <div class="col-sm-4">
+                <input type="text" name="name" step="1" value="{$info['name']}" class="form-control" required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 需要在程序中先添加钩子，否则无效</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">钩子描述：</label>
+              <div class="col-sm-4">
+                <textarea name="remark" class="form-control" required aria-required="true">{$info['remark']}</textarea>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 钩子的描述信息 </span>
+              </div>
+            </div>
+            <if condition="$info['id'] and $info['addons']">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">挂载的插件：</label>
+              <div class="col-sm-4">
+                <input type="hidden" name="addons" value="{$info.addons}" readonly>
+                <ul class="sortable-list connectList agile-list">
+                    <volist name=":explode(',',$info['addons'])" id="addons">
+                        <li class="warning-element">{$addons}</li> 
+                    </volist>
+                </ul>
+              </div>
+            </div>
+            </if>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-3 col-sm-offset-2">
+              	<input type="hidden" name="id" value="{$info.id}">
+                <button class="btn btn-primary" type="submit"><if condition="$info['id']">保存修改<else/>添加钩子</if></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/jquery-ui.min.js"></script> 
+<script src="$public/js/common.js"></script>
+<script>
+$(document).ready(function(){
+	$(".sortable-list").sortable({
+		connectWith:".connectList",
+		update :function(event, ui){
+			var sortVal = [];
+		    $(".sortable-list li").each(function(){
+            	sortVal.push($(this).text());
+		    });
+			$("input[name='addons']").val(sortVal.join(','));
+		}
+	}).disableSelection();
+});
+function WinMove() {
+	var o = "[class*=col]",
+		e = ".ibox-title",
+		i = "[class*=col]";
+	$(o).sortable({
+		handle: e,
+		connectWith: i,
+		tolerance: "pointer",
+		forcePlaceholderSize: !0,
+		opacity: .8
+	}).disableSelection()
+}
+</script>
+</body>
+</html>

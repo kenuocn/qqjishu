@@ -1,0 +1,51 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+<style>
+.theme_list{overflow:hidden;float:left;border:1px solid #f6f6f6;padding:5px;border-radius:4px; cursor:pointer;margin-bottom:10px;}
+.border_def{border:1px solid #1c84c6}
+.theme_list:hover{border:1px solid #1c84c6}
+.border_def:hover{border:1px solid #f6f6f6;}
+.theme_list img{width:100%;height:230px;}
+.theme_list .theme_name{font-size:18px;color:#222;padding:3px;height:30px;line-height:30px;}
+.theme_list .theme_author{font-size:15px;color:#222;padding:3px;height:30px;line-height:30px;}
+.theme_list .theme_remark{font-size:13px;color:#9B9B9B;height:40px;overflow:hidden;padding:3px;margin-bottom:5px;height:40px;}
+</style>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content" style="overflow:hidden;">
+         <div class="row m-b-sm m-t-sm">
+           <volist name="data['list']" id="vo">
+                <div class="theme_list col-sm-2 <if condition="$def_tmp == $key">border_def</if>">
+                    <img src="__ROOT__/Template/{$type}/{$key}/{$vo.img}">
+                    <div class="theme_name">{$vo.name}</div>
+                    <div class="theme_author">
+                    	作者：<a target="_blank" href="{$vo.url|default='http://www.hjlog.net'}">{$vo.author}</a>
+                        &nbsp;&nbsp;&nbsp;
+                        版本：{$vo.version} 
+                    </div>
+                    <div class="theme_remark">{$vo.remark}</div>
+                    <a href="{:U('Template/temp_switch',array('type'=>$type,'key'=>$key))}" class="btn btn-primary J_alink"> <if condition="$def_tmp == $key">使用中<else/>启用模板</if></a>
+                    <a href="{:U('Template/temp_del',array('type'=>$type,'key'=>$key))}" class="btn btn-danger J_del">删除</a>
+                    <a href="javascript:;" class="btn btn-success">查看</a>
+                    <if condition="$vo['opt'] eq 1">
+                    	<a href="javascript:;" onClick="layerfrm('模板设置-{$vo.name}','1000px','560px','{:U('Template/setting',array('seturl'=>$vo['seturl'],'type'=>$type,'theme'=>$vo['name']))}')" class="btn btn-info">配置</a>
+                    <else/>
+                    	<a onclick="layer.msg('模板没有设置配置文件')" class="btn btn-default">配置</a>
+                    </if>
+                </div>
+           </volist>
+         </div>
+         <div class="hr-line-dashed"></div>
+         {$data['page']}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/common.js"></script> 
+</body>
+</html> 

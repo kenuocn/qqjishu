@@ -1,0 +1,108 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"> <include file="Public/nav"/> </div>
+        <div class="ibox-content">
+          <div class="alert alert-success alert-dismissable">Ansel提示：,URL规则添加请修改 模块下/Conf/rules.php</div>
+          <form class="form-horizontal" action="{:U('Config/url')}" method="post" id="commentForm">
+            <div class="tabs-container">
+              <ul class="nav nav-tabs">
+              <volist name="setlist" id="vo">
+                <li <if condition="$vo['mod'] eq $set_type">class="active"</if>><a href="{:U('Config/url',array('set_type'=>$vo['mod']))}" aria-expanded="true">{$vo.title}</a> </li>
+              </volist>
+              </ul>
+              <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">URL大小写：</label>
+                      <div class="col-sm-4">
+                        <div class="radio radio-info radio-inline"> <input type="radio" id="URL_CASE_INSENSITIVE1" value="1" name="URL_CASE_INSENSITIVE" <if condition="$set['URL_CASE_INSENSITIVE']">checked</if> required>
+                          <label for="URL_CASE_INSENSITIVE1">启用</label>
+                        </div>
+                        <div class="radio radio-inline"> <input type="radio" id="URL_CASE_INSENSITIVE2" value="0" name="URL_CASE_INSENSITIVE" <if condition="!$set['URL_CASE_INSENSITIVE']">checked</if>>
+                          <label for="URL_CASE_INSENSITIVE2">禁用</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">URL访问模式：</label>
+                      <div class="col-sm-4">
+                        <select class="form-control m-b" name="URL_MODEL" style="width:99%">
+                          <option value="0" <if condition="$set['URL_MODEL'] eq 0">selected</if>>普通模式</option>
+                          <option value="1" <if condition="$set['URL_MODEL'] eq 1">selected</if>>PATHINFO模式</option>
+                          <option value="2" <if condition="$set['URL_MODEL'] eq 2">selected</if>>REWRITE模式</option>
+                          <option value="3" <if condition="$set['URL_MODEL'] eq 3">selected</if>>兼容模式</option>
+                        </select>
+                        <span class="help-block m-b-none">0 (普通模式); 1 (PATHINFO 模式); 2 (REWRITE  模式); 3 (兼容模式)  默认为PATHINFO 模式</span> </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">SERVER变量列表：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="URL_PATHINFO_FETCH" value="{$set['URL_PATHINFO_FETCH']}" class="form-control">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 用于兼容判断PATH_INFO 参数的SERVER替代变量列表</span> </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">PATHINFO分隔符：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="URL_PATHINFO_DEPR" value="{$set['URL_PATHINFO_DEPR']}" class="form-control">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> PATHINFO模式下，各参数之间的分割符号</span> </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">开启路由：</label>
+                      <div class="col-sm-4">
+                        <div class="radio radio-info radio-inline"> <input type="radio" id="URL_ROUTER_ON1" value="1" name="URL_ROUTER_ON" <if condition="$set['URL_ROUTER_ON']">checked</if> required>
+                          <label for="URL_ROUTER_ON1">启用</label>
+                        </div>
+                        <div class="radio radio-inline"> <input type="radio" id="URL_ROUTER_ON2" value="0" name="URL_ROUTER_ON" <if condition="!$set['URL_ROUTER_ON']">checked</if>>
+                          <label for="URL_ROUTER_ON2">禁用</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">分页变量：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="VAR_PAGE" value="{$set['VAR_PAGE']}" class="form-control">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 分页变量</span> </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">标签文章列表分页：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="TAG_PAGE_URL" value="{$set['TAG_PAGE_URL']}" class="form-control">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 标签文章列表分页,只在URL模式2生效</span> </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">普通文章列表分页：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="LIST_PAGE_URL" value="{$set['LIST_PAGE_URL']}" class="form-control">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 普通文章列表分页,只在URL模式2生效</span> </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">搜索文章列表分页：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="SEARCH_PAGE_URL" value="{$set['SEARCH_PAGE_URL']}" class="form-control">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 搜索文章列表分页,只在URL模式2生效</span> </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                      <div class="col-sm-4 col-sm-offset-2">
+                        <input type="hidden" value="{$set_type}" name="set_type">
+                        <button class="btn btn-primary" type="submit">保存设置</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script>
+</body></html>

@@ -1,0 +1,188 @@
+<include file="Public/header"/>
+<link href="$public/js/datepicker/datepicker.css" rel="stylesheet">
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"> <include file="Public/nav"/> </div>
+        <div class="ibox-content">
+          <div class="row m-b-sm m-t-sm">
+            <form class="form-horizontal m-t" action="{:U('Goods/index')}" method="post">
+              <div class="col-md-2">
+                <div class="input-group"  style="width:100%;">
+                  <select class="form-control m-b" name="cat_id" style="width:60%;padding:0;">
+                    <option value="">全部分类</option>
+                    <volist name="sort" id="vo"> 
+                      <option value="{$vo.id}" <if condition="I('post.cat_id') eq $vo['id']">selected</if>>{$vo.catname}</option>
+                    </volist>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group"  style="width:100%;">
+                  <select class="form-control m-b" name="goods_tags_id" style="width:60%;padding:0;">
+                    <option value="">全部标签</option>
+                    <volist name="goodstags" id="v1"> 
+                      <option value="{$v1.id}" <if condition="I('post.goods_tags_id') eq $v1['id']">selected</if>>{$v1.goods_tags_name}</option>
+                    </volist>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group" style="width:100%;">
+                    <div class="input-group" style="float:left">
+                      <input type="text" class="form-control" name="min_price" value="{:I('post.min_price')}" placeholder="最低价格"/>
+                      <span class="input-group-addon">-</span>
+                      <input type="text" class="form-control" name="max_price"  value="{:I('post.max_price')}" placeholder="最高价格"/>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group" style="width:100%;">
+                  <div id="datejs">
+                    <div class="input-daterange input-group" id="datepicker" style="float:left">
+                      <input type="text" class="form-control" name="start_time" id="starttime" value="{:I('post.start_time')}" placeholder="开始时间"/>
+                      <span class="input-group-addon">-</span>
+                      <input type="text" class="form-control" name="end_time" id="endtime" value="{:I('post.end_time')}" placeholder="结束时间"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group" style="width:100%;"> 
+                  <input type="text" name="goods_name" value="{:I('post.goods_name')}" placeholder="标题关键词" class="form-control" >
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group"> <span class="input-group-btn">
+                  <button type="submit" class="btn btn-primary"> 搜索</button>
+                  <button type="reset" class="btn btn-default"> 清空</button>
+                  </span> </div>
+              </div>
+            </form>
+          </div>
+          <form class="form-horizontal m-t" action="{:U('Goods/batchDelete')}" method="post" id="commentForm">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="text-align:center;width:1%"> <input type="checkbox" class="i-checks" id="chkall"></th>
+                  <th style="text-align:center;width:3%">排序</th>
+                  <th style="text-align:center;width:2%">ID</th>
+                  <th style="text-align:center;width:6%">标题</th>
+                  <th style="text-align:center;width:6%">价格</th>
+                  <th style="text-align:center;width:6%">分类</th>
+                  <th style="text-align:center;width:6%">标签</th>
+                  <th style="text-align:center;width:7%">时间</th>
+                  <th style="text-align:center;width:1%">状态</th>
+                  <th style="text-align:center;width:1%">新品</th>
+                  <th style="text-align:center;width:1%">热卖</th>
+                  <th style="text-align:center;width:1%">精品</th>
+                  <th style="text-align:center;width:7%">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <volist name="goodsInfo" id="list">
+                  <tr class="float-e-margins">
+                    <td style="text-align:center;width:1%"><input type="checkbox" id="ck_id" class="i-checks" name="id[]"  value="{$list.id}"></td>
+                    <td><input type="text" name="listorder" value="{$list.sort_num}" onblur="ajaxsotr({$list.id},this)" class="form-control" style="text-align:center;"></td>
+                    <td style="text-align:center">{$list.id}</td>
+                    <td>{$list.goods_name|str_cut=###,10}</td>
+                    <td style="text-align:center">{$list.shop_price}  /<span class="m-l-xs  todo-completed">{$list.market_price}</span></td>
+                    <td style="text-align:center">{$list.catname}</td>
+                    <td style="text-align:center">{$list.goods_tags_name}</td>
+                    <td style="text-align:center">{$list.add_time|friendlyDate=###}</td>
+                    <td style="text-align:center">
+                      <if condition="$list['status'] eq 1"> 
+                        <a class="btn mg0 btn-info btn-xs" onClick="SetStatus(this,'info','status','{$list.id}','0','{:U('Goods/status')}')">显示</a>
+                      <else/>
+                        <a class="btn mg0 btn-danger btn-xs" onClick="SetStatus(this,'danger','status','{$list.id}','1','{:U('Goods/status')}')">显示</a> 
+                      </if>
+                    </td>
+                    <td style="text-align:center">
+                      <if condition="$list['is_new'] eq 1"> 
+                      <a class="btn mg0 btn-info btn-xs" onClick="SetStatus(this,'info','is_new','{$list.id}','0','{:U('Goods/status')}')">新品</a>
+                        <else/>
+                        <a class="btn mg0 btn-danger btn-xs" onClick="SetStatus(this,'danger','is_new','{$list.id}','1','{:U('Goods/status')}')">新品</a> 
+                        </if>
+                    </td>
+                    <td style="text-align:center">
+                      <if condition="$list['is_hot'] eq 1"> 
+                      <a class="btn mg0 btn-info btn-xs" onClick="SetStatus(this,'info','is_hot','{$list.id}','0','{:U('Goods/status')}')">热卖</a>
+                        <else/>
+                        <a class="btn mg0 btn-danger btn-xs" onClick="SetStatus(this,'danger','is_hot','{$list.id}','1','{:U('Goods/status')}')">热卖</a> 
+                        </if>
+                    </td>
+                    <td style="text-align:center">
+                      <if condition="$list['is_best'] eq 1"> 
+                      <a class="btn mg0 btn-info btn-xs" onClick="SetStatus(this,'info','is_best','{$list.id}','0','{:U('Goods/status')}')">精品</a>
+                        <else/>
+                        <a class="btn mg0 btn-danger btn-xs" onClick="SetStatus(this,'danger','is_best','{$list.id}','1','{:U('Goods/status')}')">精品</a> 
+                        </if>
+                    </td>
+                    <td style="text-align:center">
+                    <a href="{:U('Goods/edit',array('id'=>$list['id']))}" class="btn mg0 btn-primary btn-xs"><i class="fa fa-paste"></i> 编辑</a> 
+                    <a href="{:U('Goods/batchDelete',array('id'=>$list['id']))}" class="btn mg0 btn-danger btn-xs J_del"><i class="fa fa-times"></i> 删除</a>
+                    </td>
+                  </tr>
+                </volist>
+              </tbody>
+            </table>
+            {$page}
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-3">
+                <button class="btn btn-primary" type="submit">删除选中</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script> 
+<include file="Public/footer"/>
+<script src="$public/js/datepicker/datepicker.js"></script> 
+<script>
+$(function(){
+  //时间选择
+    $("#datejs .input-daterange").datepicker({
+        keyboardNavigation: !1,
+        forceParse: !1,
+        autoclose: !0,
+    }); {
+        var i = document.querySelector(".js-switch"),
+        t = (new Switchery(i, {
+            color: "#1AB394"
+        }), document.querySelector(".js-switch_2")),
+        a = (new Switchery(t, {
+            color: "#ED5565"
+        }), document.querySelector(".js-switch_3"));
+        new Switchery(a, {
+            color: "#1AB394"
+        })
+    }
+});
+
+function  ajaxsotr(id,value){
+    $.ajax({
+      url: "{:U('Goods/sort')}",
+      type: 'post',
+      dataType: 'json',
+      data: {'id': id , 'sort': $(value).val()},
+    })
+    .done(function(res){
+       if(res.status == 1)
+       {
+          layer.msg(res.info);
+       }else{
+          layer.msg(res.info);
+       }
+    })
+
+}
+</script> 
+
+</body></html>

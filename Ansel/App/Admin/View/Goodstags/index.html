@@ -1,0 +1,85 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"> <include file="Public/nav"/> </div>
+        <div class="ibox-content">
+          <form class="form-horizontal m-t" action="{:U('Goodstags/batchDelete')}" method="post" id="commentForm">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="text-align:center;width:1%"> <input type="checkbox" class="i-checks" id="chkall"></th>
+                  <th style="text-align:center;width:6%">排序</th>
+                  <th style="text-align:center">ID</th>
+                  <th style="text-align:center">标签名称</th>
+                  <th style="text-align:center">英文名称</th>
+                  <th style="text-align:center">Font图标</th>
+                  <th style="text-align:center">添加时间</th>
+                  <th style="text-align:center">状态</th>
+                  <th style="text-align:center">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <volist name="data" id="vo">
+                  <tr class="float-e-margins">
+                    <td style="text-align:center;width:1%"><input type="checkbox" id="ck_id" class="i-checks" name="id[]"  value="{$vo.id}"></td>
+                    <td  style="text-align:center"><input type="text" name="listorder" onblur="ajaxsotr({$vo.id},this)" value="{$vo.sort}" class="input-sm form-control" style="text-align:center;" required></td>
+                    <td style="text-align:center">{$vo.id}</td>
+                    <td style="text-align:center">{$vo.goods_tags_name}</td>
+                    <td style="text-align:center">{$vo.goods_tags_name_english}</td>
+                    <td style="text-align:center"><i class="fa fa-{$vo.goods_tags_font|default="desktop"}"></i></td>
+                    <td style="text-align:center">{$vo.add_time|date="Y-m-d H:i:s",###}</td>
+                    <td style="text-align:center">
+                      <if condition="$vo['status'] eq 1"> 
+                        <a class="btn mg0 btn-info btn-xs" onClick="SetStatus(this,'info','status','{$vo.id}','0','{:U('Goodstags/status')}')">显示</a>
+                      <else/>
+                        <a class="btn mg0 btn-danger btn-xs" onClick="SetStatus(this,'danger','status','{$vo.id}','1','{:U('Goodstags/status')}')">显示</a> 
+                      </if>
+                    </td>
+                    <td style="text-align:center">
+                      <a href="{:U('Goodstags/edit',array('id'=>$vo['id']))}" class="btn mg0 btn-primary btn-xs"><i class="fa fa-paste"></i> 编辑</a>
+                      <a href="{:U('Goodstags/batchDelete',array('id'=>$vo['id']))}" class="btn mg0 btn-danger btn-xs J_del"><i class="fa fa-times"></i> 删除</a>
+                    </td>
+                  </tr>
+                </volist>
+              </tbody>
+            </table>
+            {$page}
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-1">
+                <button class="btn btn-primary" type="submit">删除选择</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script>
+<script src="$public/js/common.js"></script> 
+<include file="Public/footer"/>
+<script type="text/javascript">
+  function  ajaxsotr(id,value){
+    $.ajax({
+      url: "{:U('Goodstags/sort')}",
+      type: 'post',
+      dataType: 'json',
+      data: {'id': id , 'sort': $(value).val()},
+    })
+    .done(function(res){
+       if(res.status == 1)
+       {
+          layer.msg(res.info);
+       }else{
+          layer.msg(res.info);
+       }
+    })
+
+  }
+</script>
+</body>
+</html>

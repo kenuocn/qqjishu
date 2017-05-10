@@ -1,0 +1,150 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+          <form class="form-horizontal m-t" action="" method="post" id="commentForm"> 
+          <volist name="sets" id="vo"> <!--图片上传-->
+          	<switch name="vo.type">
+            	<case value="image"><!--图片上传-->
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">{$vo.name}：</label>
+                      <div class="col-sm-6">
+                        <webhtml name="{$key}" btn="{$vo.btn}" num="1" auto="auto" value="{$vo['val']?$vo['val']:$vo['value']}" type="image"/>
+                        <if condition="$vo['description']">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {$vo.description}</span> 
+                        </if>
+                      </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                </case>
+                <case value="file"><!--文件上传-->
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">{$vo.name}：</label>
+                      <div class="col-sm-6">
+                        <webhtml name="{$key}" btn="{$vo.btn}" num="1" auto="auto" value="{$vo['val']?$vo['val']:$vo['value']}" type="file"/>
+                        <if condition="$vo['description']">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {$vo.description}</span> 
+                        </if>
+                      </div>
+                    </div>
+                   <div class="hr-line-dashed"></div>
+                </case>
+                <case value="text"><!--文本框-->
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">{$vo.name}：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="{$key}" value="{$vo['val']?$vo['val']:$vo['value']}" class="form-control">
+                        <if condition="$vo['description']">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {$vo.description}</span> 
+                        </if>
+                      </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                </case>
+                <case value="multi"><!--多行文本框-->
+                    <div class="form-group"> 
+                      <label class="col-sm-2 control-label">{$vo.name}：</label>
+                      <div class="col-sm-6">
+                        <textarea name="{$key}" class="form-control">{$vo['val']?$vo['val']:$vo['value']}</textarea>
+                        <if condition="$vo['description']">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {$vo.description}</span> 
+                        </if>
+                      </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                </case>
+                <case value="radio"><!--单选-->
+                    <?php $name=$key;?>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">{$vo.name}：</label>
+                      <div class="col-sm-10">
+                      <volist name="vo['values']" id="va">
+                        <div class="radio radio-info radio-inline">
+                          <input type="radio" id="{$name}{$i}" value="{$key}" name="{$name}" <if condition="$vo['val'] and $vo['val'] eq $key">checked<elseif condition="$vo['value'] eq $key"/>checked</if>>
+                          <label for="{$name}{$i}">{$va}</label> 
+                        </div>
+                      </volist> 
+                      <if condition="$vo['description']">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {$vo.description}</span> 
+                      </if>
+                      </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>	
+                </case>
+                <case value="chexkbox"><!--复选框-->
+                    <?php $name=$key;?>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">{$vo.name}：</label>
+                      <div class="col-sm-10">
+                      <volist name="vo['values']" id="va">
+                        <div class="checkbox checkbox-inline">
+                          <input id="{$name}{$i}" value="{$key}" name="{$name}[]" type="checkbox" <if condition="in_array($key,$vo['val'])">checked</if>>
+                          <label for="{$name}{$i}">{$va}</label> 
+                        </div>
+                      </volist> 
+                      <if condition="$vo['description']">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {$vo.description}</span> 
+                      </if>
+                      </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                </case>
+                <case value="select"><!--下拉框-->
+                    <?php $name=$key;?>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">{$vo.name}：</label>
+                      <div class="col-sm-5">
+                      <select class="form-control" name="{$name}" style="width:99%">
+                        <volist name="vo['values']" id="va">
+                          <option value="{$key}" <if condition="$vo['val'] and $vo['val'] eq $key">selected<elseif condition="$vo['value'] eq $key"/>selected</if> > {$va}</option>
+                        </volist>
+                     </select>
+                      <if condition="$vo['description']">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {$vo.description}</span> 
+                      </if>
+                      </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                </case>
+                <case value="editor"><!--富文本编辑器-->
+                    <div class="form-group"> 
+                      <label class="col-sm-2 control-label">{$vo.name}：</label>
+                      <div class="col-sm-10">
+                        <textarea name="{$key}" id="{$key}" style="height:300px;">{$vo.val}</textarea>
+                        <script>
+                        $(function(){
+                            var ue = UE.getEditor('{$key}',{
+                                serverUrl :"{:U('Attachment/uploadflie')}"
+                            });
+                        }) 
+                        </script>
+                        <if condition="$vo['description']">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> {$vo.description}</span> 
+                        </if>
+                      </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                </case>
+            </switch> 
+          </volist>
+          <div class="form-group">
+              <div class="col-sm-3 col-sm-offset-2">
+              	<input type="hidden" name="theme" value="{$theme}">
+                <input type="hidden" name="type" value="{$type}">
+                <button class="btn btn-primary" type="submit">保存配置</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/ueditor/ueditor.config.js"></script>
+<script src="$public/js/ueditor/ueditor.all.min.js"></script> 
+<script src="$public/js/common.js"></script>
+</body></html>

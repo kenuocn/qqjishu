@@ -1,0 +1,164 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+          <form class="form-horizontal m-t" action="{:U('Menu/edit')}" method="post" id="commentForm">
+          		<div class="form-group">
+                  <label class="col-sm-3 control-label">菜单类型：</label>
+                  <div class="col-sm-6">
+                    <div class="radio radio-info radio-inline">
+                      <input type="radio" id="type1" value="1" name="type" <if condition="$info['type'] eq 1">checked</if>>
+                      <label for="type1">权限控制</label>
+                    </div>
+                    <div class="radio radio-inline">
+                      <input type="radio" id="type2" value="0" name="type" <if condition="$info['type'] eq 0">checked</if>>
+                      <label for="type2">普通菜单</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">菜单状态：</label>
+                  <div class="col-sm-6">
+                    <div class="radio radio-info radio-inline">
+                      <input type="radio" id="status1" value="1" name="status" <if condition="$info['status'] eq 1">checked</if>>
+                      <label for="status1">显示</label>
+                    </div>
+                    <div class="radio radio-inline">
+                      <input type="radio" id="status2" value="0" name="status" <if condition="$info['status'] eq 0">checked</if>>
+                      <label for="status2">不显示</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">异步提交：</label>
+                  <div class="col-sm-6">
+                    <div class="radio radio-info radio-inline">
+                      <input type="radio" id="ajax1" value="1" name="ajax" <if condition="$info['ajax'] eq 1">checked</if> onclick="show_set(1)">
+                      <label for="ajax1">异步连接</label>
+                    </div>
+                    <div class="radio radio-inline">
+                      <input type="radio" id="ajax2" value="2" name="ajax" <if condition="$info['ajax'] eq 2">checked</if> onclick="show_set(2)">
+                      <label for="ajax2">弹窗打开</label>
+                    </div>
+                    <div class="radio radio-inline">
+                      <input type="radio" id="ajax3" value="0" name="ajax" <if condition="$info['ajax'] eq 0">checked</if> onclick="show_set(0)">
+                      <label for="ajax3">跳转菜单</label>
+                    </div>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 设置菜单打开方式</span>
+                  </div>
+                </div>
+                <div id="ment_set" <if condition="$info['ajax'] neq 2">style="display:none"</if>>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">页面宽度：</label>
+                      <div class="col-sm-2">
+                        <input type="text" name="width" value="{$info.width}" placeholder="填写纯数字" class="form-control">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 弹窗打开时页面的宽度</span>
+                      </div>
+                        <div class="col-sm-2">
+                            <input type="text" name="height" value="{$info.height}" placeholder="填写纯数字" class="form-control">
+                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 弹窗打开时页面的高度</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">上级菜单：</label>
+                  <div class="col-sm-3">
+                    <select class="form-control m-b" name="pid" style="width:99%">
+                      <option value="0">一级菜单</option>
+                    <volist name="list" id="vo">
+                      <option value="{$vo.id}" <if condition="$info['pid'] eq $vo['id']">selected</if>>{$vo.name}</option>
+                    </volist>
+                    </select>
+                    <span class="help-block m-b-none">默认为一级菜单</span> </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">菜单名称：</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="name" value="{$info.name}" placeholder="菜单名称" class="form-control" required aria-required="true">
+                  </div>
+                </div>  
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">菜单图标：</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="fonts" id="fonts" onclick="showicon()" value="<if condition="$info['fonts']">{$info.fonts}<else/>desktop</if>"  placeholder="菜单图标" class="form-control">
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 采用Font Awesome字体图标</span> </div>
+                </div>     
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">模块：</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="app"  value="<if condition="$info['app']">{$info.app}<else/>Admin</if>"  placeholder="模块" class="form-control" required aria-required="true">
+                  </div>
+                </div>    
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">控制器：</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="controller" value="{$info.controller}"  placeholder="控制器" class="form-control" required aria-required="true">
+                  </div>
+                </div>                              
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">方法：</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="action" value="{$info.action}"  placeholder="方法" class="form-control" required aria-required="true">
+                  </div>
+                </div>                              
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">参数：</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="parameter" value="{$info.parameter}" placeholder="参数" class="form-control">
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 例:groupid=1&type=2 </span>
+                  </div>
+                </div>     
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">备注：</label>
+                  <div class="col-sm-6">
+                    <textarea name="remark" class="form-control">{$info.remark}</textarea>
+                  </div>
+                </div>   
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                  <div class="col-sm-4 col-sm-offset-3">
+                  	<input type="hidden" value="{$info.id}" name="id">
+                    <button class="btn btn-primary" type="submit">保存内容</button>
+                  </div>
+                </div>            
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="fonticon" style="display: none;">
+    <include file="Public/fonticon"/>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script>
+<script>
+function show_set(type){
+	if(type==2){
+		$("#ment_set").show();	
+	}else{
+		$("#ment_set").hide();	 
+	}
+}
+function showicon(){
+    layer.open({
+        type: 1,
+        title:'点击选择图标',
+        area: ['800px', '100%'], //宽高
+        content: $('.fonticon')
+    });
+}
+$('.fontawesome-icon-list .fa-hover').find('a').click(function(){
+    var str=$(this).text();
+    $('#fonts').val( $.trim(str));
+    layer.closeAll();
+})
+</script>
+</body>
+</html> 

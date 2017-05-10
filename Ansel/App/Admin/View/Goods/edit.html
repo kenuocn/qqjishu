@@ -1,0 +1,191 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+          <div class="ibox-title">
+            <include file="Public/nav"/>
+          </div>
+        <div class="ibox-content">
+          <div class="tabs-container">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">商品信息</a> </li>
+              <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">其他数据</a> </li>
+            </ul>
+            <form class="form-horizontal" action="{:U('edit')}" method="post" id="commentForm">
+              <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">商品分类：</label>
+                      <div class="col-sm-5">
+                        <select class="form-control" name="cat_id" style="width:30%">
+                          <volist name="sort" id="vo">
+                            <option value="{$vo.id}" <if condition="$goodsInfo['cat_id'] eq $vo['id']"> selected </if>>{$vo.catname}</option>
+                          </volist>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">商品名称： <font color="#FF0000">*</font></label>
+                      <div class="col-sm-4">
+                        <input type="text" name="goods_name" value="{$goodsInfo.goods_name}"  placeholder="商品名称" class="form-control" required aria-required="true">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 必须填写</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">商品价格： <font color="#FF0000">*</font></label>
+                      <div class="col-sm-2">
+                        <input type="text" name="shop_price" value="{$goodsInfo.shop_price}"  placeholder="商品价格" class="form-control" required aria-required="true">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 必须填写</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">市场价格： <font color="#FF0000">*</font></label>
+                      <div class="col-sm-2">
+                        <input type="text" name="market_price" value="{$goodsInfo.market_price}"  placeholder="市场价格" class="form-control" required aria-required="true">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 必须填写</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">缩略图：</label>
+                      <div class="col-sm-6">
+                        <webhtml name="goods_thum" btn="上传图片" num="10" auto="auto" value="$goodsInfo['goods_thum']" type="image"/>
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 可以上传多张缩略图</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">内容： <font color="#FF0000">*</font></label>
+                      <div class="col-sm-9">
+                        <textarea name="goods_desc" id="content" style="height:300px;" required aria-required="true">{$goodsInfo.goods_desc}</textarea>
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 必须填写</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">排序： <font color="#FF0000">*</font></label>
+                      <div class="col-sm-2">
+                        <input type="text" name="sort_num" value="{$goodsInfo.sort_num}"  placeholder="排序" class="form-control" required aria-required="true">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 必须填写</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">操作：</label>
+                      <div class="col-sm-10">
+                        <div class="radio radio-info radio-inline">
+                          <input type="radio" id="status1" value="1" name="status" <if condition="$goodsInfo['status'] eq 1">checked="checked"</if>>
+                          <label for="status1">审核</label>
+                        </div>
+                        <div class="radio radio-inline">
+                          <input type="radio" id="status2" value="0" name="status" <if condition="$goodsInfo['status'] eq 0">checked="checked"</if>>
+                          <label for="status2">取消审核</label>
+                        </div>
+                        <div class="radio radio-inline">
+                          <input type="radio" id="status3" value="2" name="status" <if condition="$goodsInfo['status'] eq 2">checked="checked"</if>>
+                          <label for="status3">放进回收站</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="tab-2" class="tab-pane">
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">商品标签：</label>
+                      <div class="col-sm-5">
+                        <select class="form-control" name="goods_tags_id[]" multiple="multiple" style="width:40%">
+                          <volist name="goodstags" id="v1">
+                           
+                            <option value="{$v1.id}" <if condition="in_array($v1['id'],$goodsInfo['goods_tags_id'])">selected="selected"</if>>{$v1.goods_tags_name}</option>
+                   
+                          </volist>
+                        </select>
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 可以按住ctrl加鼠标确定键进行多选</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">商品相册：</label>
+                      <div class="col-sm-6">
+                        <webhtml name="good_pic" btn="上传图片" num="2" auto="auto" value="$goodsInfo['good_pic']" type="image"/>
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 可以上传多张商品图片</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">网盘地址：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="down_url" value="{$goodsInfo.down_url}" placeholder="网盘地址" class="form-control">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请设置虚拟物品网盘链接,没有则不填写</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">提取密码：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="ex_password" value="{$goodsInfo.ex_password}" placeholder="提取密码" class="form-control">
+                        <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请填写网盘提取密码,没有则不填写</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">下载说明：</label>
+                      <div class="col-sm-6">
+                        <textarea name="down_desc" class="form-control" placeholder="下载说明">{$goodsInfo.down_desc}</textarea>
+                      </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">操作：</label>
+                        <div class="col-sm-10">
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="is_new1" value="1" name="is_new" <if condition="$goodsInfo['is_new'] eq 1">checked="checked"</if>>
+                                <label for="is_new1">新品</label>
+                            </div>
+                            <div class="radio radio-inline">
+                                <input type="radio" id="is_new2" value="0" name="is_new" <if condition="$goodsInfo['is_new'] eq 0">checked="checked"</if>>
+                                <label for="is_new2">取消新品</label>
+                            </div>
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="is_hot1" value="1" name="is_hot" <if condition="$goodsInfo['is_hot'] eq 1">checked="checked"</if>>
+                                <label for="is_hot1">热卖</label>
+                            </div>
+                            <div class="radio radio-inline">
+                                <input type="radio" id="is_hot2" value="0" name="is_hot" <if condition="$goodsInfo['is_hot'] eq 0">checked="checked"</if>>
+                                <label for="is_hot2">取消热卖</label>
+                            </div>
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="is_best1" value="1" name="is_best" <if condition="$goodsInfo['is_best'] eq 1">checked="checked"</if>>
+                                <label for="is_best1">精品</label>
+                            </div>
+                            <div class="radio radio-inline">
+                                <input type="radio" id="is_best2" value="0" name="is_best" <if condition="$goodsInfo['is_best'] eq 0">checked="checked"</if>>
+                                <label for="is_best2">取消精品</label>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="hr-line-dashed"></div>
+              <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-2">
+                  <input type="hidden" name="id" value="{$goodsInfo['goods_id']}">
+                  <button class="btn btn-primary" type="submit">保存修改</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/ueditor/ueditor.config.js"></script>
+<script src="$public/js/ueditor/ueditor.all.min.js"></script> 
+<script src="$public/js/common.js"></script>
+<script>
+$(function(){
+    var ue = UE.getEditor('content',{
+        serverUrl :"{:U('Attachment/uploadflie')}"
+    });
+})
+</script>
+</body>
+</html>

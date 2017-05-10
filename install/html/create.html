@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ansel-安装程序</title>
+<link rel="stylesheet" href="css/install.css">
+<link rel="stylesheet" href="../statics/js/layui/css/layui.css">
+<script src="../statics/js/jquery.js"></script>
+<script src="../statics/js/layui/layui.js"></script>
+</head>
+<body>
+<div class="header">
+  <div class="head">
+    <div class="logo"><a href="../install/index.php"><img src="img/logo.png" alt="Ansel系统"></a></div>
+    <div class="step_div">
+      <ul>
+        <li class="step">1 安装协议</li>
+        <li class="step">2 环境检测</li>
+        <li class="step cur">3 创建数据</li>
+        <li class="step">4 安装完成</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+	<div class="inwp cl">
+		<form class="layui-form layui-form-pane" action="./index.php?step=success" id="frompost" method="post">
+			<div class="layui-elem-quote" style="margin-top: 20px;">数据库信息</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">服务器</label>
+				<div class="layui-input-block">
+					<input type="text" name="dbhost" id="dbhost" value="127.0.0.1" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">端口</label>
+				<div class="layui-input-block">
+					<input type="text" name="dbport" id="dbport" value="3306" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">用户名</label>
+				<div class="layui-input-block">
+					<input type="text" name="dbuser" id="dbuser" value="root" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">密码</label>
+				<div class="layui-input-block">
+					<input type="text" name="dbpwd" id="dbpwd" class="layui-input" onblur="TestDbPwd()">
+				</div>
+			</div>
+            <div class="layui-form-item">
+				<label class="layui-form-label">数据库名</label>
+				<div class="layui-input-block">
+					<input type="text" name="dbname" id="dbname" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">表前缀</label>
+				<div class="layui-input-block">
+					<input type="text" name="dbprefix" id="dbprefix" value="an_"  class="layui-input">
+				</div>
+			</div>
+            <div class="layui-elem-quote" style="margin-top: 20px;">网站配置</div>
+            <div class="layui-form-item">
+				<label class="layui-form-label">网站名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="title" id="title" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">关键词</label>
+				<div class="layui-input-block">
+					<input type="text" name="keywords" id="keywords" value="" class="layui-input">
+				</div>
+			</div>
+            <div class="layui-form-item">
+				<label class="layui-form-label">描述</label>
+				<div class="layui-input-block">
+					<input type="text" name="content" id="content" class="layui-input">
+				</div>
+			</div>
+            <div class="layui-elem-quote" style="margin-top: 20px;">管理员信息</div>
+            <div class="layui-form-item">
+				<label class="layui-form-label">管理员帐号</label>
+				<div class="layui-input-block">
+					<input type="text" name="username" id="username" class="layui-input">
+				</div>
+			</div>
+            <div class="layui-form-item">
+				<label class="layui-form-label">邮箱</label>
+				<div class="layui-input-block">
+					<input type="email" name="email" id="email" value="" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">密码</label>
+				<div class="layui-input-block">
+					<input type="password" name="password" id="password" value="" class="layui-input">
+				</div>
+			</div>
+            <div class="layui-form-item">
+				<label class="layui-form-label">重复密码</label>
+				<div class="layui-input-block">
+					<input type="password" name="password1" id="password1" class="layui-input">
+				</div>
+			</div>
+            <div class="step_sub">
+             <a href="./index.php?step=check" class="last">上一步</a>
+             <button class="sub j_ajax" >确认安装</button>
+            </div>
+		</form>
+	</div>
+</div>
+<script>
+layui.use('form','layer', function(){
+  var form = layui.form();
+  var layer = layui.layer;
+  
+});
+$('.j_ajax').on('click',function(e){
+	e.preventDefault();
+	var dbhost = $('#dbhost').val();
+	if(!dbhost){layer.msg("请输入数据库连接地址，一般为 127.0.0.1 或者 localhost");return false;}
+	
+	var dbuser = $('#dbuser').val();
+	if(!dbuser){layer.msg("请输入数据库用户名");return false;}
+	
+	var dbpwd = $('#dbpwd').val();
+	if(!dbpwd){layer.msg("请输入数据库密码");return false;}
+	
+	var dbname = $('#dbname').val();
+	if(!dbname){layer.msg("请输入数据库名称");return false;}
+	
+	var dbport = $('#dbport').val();
+	if(!dbport){layer.msg("请输入数据库端口，一般为 3306");return false;}
+	
+	var dbprefix = $('#dbprefix').val();
+	if(!dbprefix){layer.msg("请输入数据库表前缀");return false;}
+	
+	var title = $('#title').val();
+	if(!title){layer.msg("请输入网站名称");return false;}
+	var keywords = $('#keywords').val();
+	var content = $('#content').val();
+	
+	var username = $('#username').val();
+	if(!username){layer.msg("请输入管理员账号 一般为 admin");return false;}
+	
+	var email = $('#email').val();
+	if(!email){layer.msg("请输入管理员邮箱");return false;}
+	var check = /\w+[@]{1}\w+[.]\w+/;
+	if(!check.test(email)){
+		layer.msg("邮箱格式错误");return false; 
+	}
+	
+	var password = $('#password').val();
+	if(!password){layer.msg("请输入管理员账号密码");return false;}
+	var pwd_check=/^[a-z]\w{6,10}$/;
+	if(!pwd_check.test(password)){
+		$('#password').val("");
+		layer.msg("请输入6-10位字母和数字混合密码"); return false;
+	}
+		 
+	var password1 = $('#password1').val();
+	if(!password1){layer.msg("请再次输入管理员密码");return false;}
+	if(!pwd_check.test(password)){
+		$('#password').val("");
+		layer.msg("请输入6-10位字母和数字混合密码"); return false;
+	}else if(password!=password1){
+		 $('#password1').val("").focus();
+		layer.msg("两次输入的密码不相同");  return false;	
+	}
+	var data = $("#frompost").serialize();
+	var url="./index.php?step=mysql";
+	$.ajax({
+		type: "POST",
+		url: url,
+		dataType : "json",  
+		data: data,
+		success: function(res){
+			if(res.status){
+				location.href='./index.php?step=success';
+			}else{
+				layer.msg(res.msg);
+			}
+		}
+	});
+});
+function TestDbPwd(){
+	var dbhost = $('#dbhost').val();
+	var dbuser = $('#dbuser').val();
+	var dbpwd = $('#dbpwd').val();
+	var dbname = $('#dbname').val();
+	var dbport = $('#dbport').val();
+	data={'dbhost':dbhost,'dbuser':dbuser,'dbpwd':dbpwd,'dbname':dbname,'dbport':dbport};
+	var url =  "./index.php?step=testdbpwd";
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: data,
+		beforeSend:function(){},
+		success: function(msg){
+			if(msg){
+				
+			}else{
+				$('#dbpw').val("");
+				layer.msg("数据库连接失败");
+			}
+		}
+	});
+}
+</script>
+</body>
+</html>

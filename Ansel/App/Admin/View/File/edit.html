@@ -1,0 +1,79 @@
+<include file="Public/header"/>
+<link href="$public/js/code/codemirror.css" rel="stylesheet">
+<link href="$public/js/code/ambiance.css" rel="stylesheet">
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+          <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+            <div class="form-group">
+              <label class="col-sm-1 control-label">文件名称：</label>
+              <div class="col-sm-4">
+                <input type="text" value="{$file}" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-1 control-label">文件内容：</label>
+              <div class="col-sm-10">
+                <textarea name="content" id="code">{$content}</textarea>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-3 col-sm-offset-1">
+                <input type="hidden" name="dir" id="dir" value="{$dir}"/>
+                <input type="hidden" name="file" id="file" value="{$file}"/>
+                <button class="btn btn-primary" type="button" onClick="return getvalue()">保存代码</button>
+                <button class="btn btn-info" type="button" onClick="return undo()">撤销当前修改</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/code/codemirror.js"></script> 
+<script src="$public/js/code/javascript.js"></script> 
+<script src="$public/js/common.js"></script>
+<script>
+var editor=null;
+editor=CodeMirror.fromTextArea(document.getElementById('code'),{
+	lineNumbers:true,
+	matchBrackets:true,
+	styleActiveLine:true,
+	theme:"ambiance",
+});
+
+//撤销
+function undo(){
+	editor.undo();
+}
+//保存
+function getvalue(){
+	var dir=$('#dir').val();
+	var file=$('#file').val();
+	var content=editor.getValue();
+	$.ajax({  
+		url : "{:U('File/edit')}",  
+		type : "post",  
+		data:{dir:dir,file:file,content:content},  
+		success : function(res) {  
+			if(res.status) {  
+				layer.msg(""+res.info+"....",{icon:1,time:2000},function(){
+					reloadPage(window);
+				});
+			} else {  
+				layer.alert(res.info || "操作错误",{title:'错误提示',icon:0});
+			}  
+		}  
+	}); 
+}	
+</script>
+</body></html>

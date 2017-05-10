@@ -1,0 +1,193 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"> <include file="Public/nav"/> </div>
+        <div class="ibox-content">
+          <form class="form-horizontal" action="{:U('Config/site')}" method="post" id="commentForm">
+            <div class="tabs-container">
+              <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">网站设置</a> </li>
+                <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">优化推广</a> </li>
+                <li class=""><a data-toggle="tab" href="#tab-3" aria-expanded="false">邮箱配置</a> </li>
+                <!--<li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false">第三方登陆</a> </li>-->
+              </ul>
+              <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">网站状态：</label>
+                      <div class="col-sm-6">
+                        <div class="radio radio-info radio-inline"> <input type="radio" id="web1" value="1" name="web" <if condition="$site['web'] eq 1">checked</if> >
+                          <label for="web1">开启</label>
+                        </div>
+                        <div class="radio radio-inline"> <input type="radio" id="web2" value="2" name="web"  <if condition="$site['web'] eq 2">checked</if> >
+                          <label for="web2">关闭</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">网站关闭提示：</label>
+                      <div class="col-sm-6">
+                        <textarea name="webtip" class="form-control">{$site.webtip}</textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">开启手机版：</label>
+                      <div class="col-sm-6">
+                        <div class="radio radio-info radio-inline"> <input type="radio" id="ismobile1" value="1" name="ismobile" <if condition="$site['ismobile'] eq 1">checked</if> >
+                          <label for="ismobile1">开启</label>
+                        </div>
+                        <div class="radio radio-inline"> <input type="radio" id="ismobile2" value="2" name="ismobile" <if condition="$site['ismobile'] eq 2">checked</if> >
+                          <label for="ismobile2">关闭</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">操作日志记录：</label>
+                      <div class="col-sm-6">
+                        <div class="radio radio-info radio-inline"> <input type="radio" id="czlog1" value="1" name="Operationlog" <if condition="$site['Operationlog'] eq 1">checked</if> >
+                          <label for="czlog1">开启</label>
+                        </div>
+                        <div class="radio radio-inline"> <input type="radio" id="czlog2" value="2" name="Operationlog" <if condition="$site['Operationlog'] eq 2">checked</if> >
+                          <label for="czlog2">关闭</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">登陆日志记录：</label>
+                      <div class="col-sm-6">
+                        <div class="radio radio-info radio-inline"> <input type="radio" id="loginglog1" value="1" name="loginglog" <if condition="$site['loginglog'] eq 1">checked</if> >
+                          <label for="loginglog1">开启</label>
+                        </div>
+                        <div class="radio radio-inline"> <input type="radio" id="loginglog2" value="2" name="loginglog" <if condition="$site['loginglog'] eq 2">checked</if> >
+                          <label for="loginglog2">关闭</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="tab-2" class="tab-pane">
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">站点名称：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="title" value="{$site.title}" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">网站关键字：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="keywords" value="{$site.keywords}" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">网站简介：</label>
+                      <div class="col-sm-6">
+                        <textarea name="content" class="form-control">{$site.content}</textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">ICP备案号：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="icp" value="{$site.icp}" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">网站版权：</label>
+                      <div class="col-sm-6">
+                        <textarea name="copyright" class="form-control">{$site.copyright}</textarea>
+                      </div>
+                    </div>
+                    <!--div class="form-group">
+                      <label class="col-sm-2 control-label">默认作者：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="author" value="{$site.author}" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">文章保留版权提示：</label>
+                      <div class="col-sm-6">
+                        <textarea name="article_copyright" class="form-control">{$site.article_copyright}</textarea>
+                      </div>
+                    </div-->
+                  </div>
+                </div>
+                <div id="tab-3" class="tab-pane">
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">邮件发送模式：</label>
+                      <div class="col-sm-6">
+                        <div class="radio radio-info radio-inline"> <input type="radio" id="mail_type" value="1" name="mail_type" <if condition="$site['mail_type'] eq 1">checked</if> >
+                          <label for="mail_type">SMTP 函数发送 </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">邮件服务器：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="mail_server" value="{$site.mail_server}" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">邮件发送端口：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="mail_port" value="{$site.mail_port}" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">发件人地址：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="mail_from" value="{$site.mail_from}" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">发件人名称：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="mail_fname" value="{$site.mail_fname}" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">密码验证：</label>
+                      <div class="col-sm-6">
+                        <div class="radio radio-info radio-inline"> <input type="radio" id="mail_auth1" value="1" name="mail_auth" <if condition="$site['mail_auth'] eq 1">checked</if> >
+                          <label for="mail_auth1">开启</label>
+                        </div>
+                        <div class="radio radio-inline"> <input type="radio" id="mail_auth2" value="0" name="mail_auth" <if condition="$site['mail_auth'] eq 0">checked</if> >
+                          <label for="mail_auth2">关闭</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">验证用户名：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="mail_user" value="{$site.mail_user}" class="form-control">
+                      </div>
+                    </div> 
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">验证密码：</label>
+                      <div class="col-sm-6">
+                        <input type="text" name="mail_password" value="{$site.mail_password}" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-4 col-sm-offset-2">
+                <button class="btn btn-primary" type="submit">保存设置</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script>
+</body></html>

@@ -1,0 +1,205 @@
+<include file="Public/header"/>
+<link href="$public/js/code/codemirror.css" rel="stylesheet">
+<link href="$public/js/code/ambiance.css" rel="stylesheet">
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"> <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+          <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">标识名：</label>
+              <div class="col-sm-6">
+                <input type="text" name="name" id="name" value="Example" class="form-control" required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请输入插件标识</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">插件名：</label>
+              <div class="col-sm-6">
+                <input type="text" name="title" value="示例" class="form-control" required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请输入插件名</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">版本：</label>
+              <div class="col-sm-6">
+                <input type="text" name="version" value="0.1" class="form-control" required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请输入插件版本</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">作者：</label>
+              <div class="col-sm-6">
+                <input type="text" name="author" value="Ansel" class="form-control" required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请输入插件作者</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">描述：</label>
+              <div class="col-sm-6">
+                <textarea name="description" class="form-control">这是插件描述</textarea>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请输入描述</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">安装后是否启用：</label>
+              <div class="col-sm-6">
+                  <div class="switch" style="margin-top:7px;">
+                    <div class="onoffswitch">
+                      <input type="checkbox" name="status" value="1" class="onoffswitch-checkbox" id="status">
+                      <label class="onoffswitch-label" for="status"> 
+                      	<span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> 
+                      </label>
+                    </div>
+                  </div>
+              </div>
+            </div>  
+            <div class="form-group">
+              <label class="col-sm-2 control-label">是否需要配置：</label>
+              <div class="col-sm-6">
+                  <div class="switch" style="margin-top:7px;">
+                    <div class="onoffswitch">
+                      <input type="checkbox" name="has_config" value="1" class="onoffswitch-checkbox" id="has_config">
+                      <label class="onoffswitch-label" for="has_config"> 
+                      	<span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> 
+                      </label>
+                    </div>
+                  </div>
+              </div>
+            </div> 
+            <div class="hasconfig" style="display:none"> 
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">配置数组：</label>
+                  <div class="col-sm-6">
+                    <textarea name="config" style="height:200px;" class="form-control">
+&lt;?php
+/*插件设置*/
+return array(
+	'title' => array(//配置在表单中的键名 ,这个会是  name 值 
+        'type' => 'text',
+        'name' => '板块1',
+        'value'=>'系统信息',//默认没有数据 
+        'description' => '系统信息',//描述
+    ),
+);
+                    </textarea>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请严格按照格式配置</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">自定义配置模板：</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="custom_config" value="" id="custom_config" class="form-control">
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 自定义模板,注意：自定义模板里的表单name必须为config[name]这种，获取保存后配置的值用$data.config.name</span>
+                  </div>
+                </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">是否需要外部访问：</label>
+              <div class="col-sm-6">
+                  <div class="switch" style="margin-top:7px;">
+                    <div class="onoffswitch">
+                      <input type="checkbox" name="has_outurl" value="1" class="onoffswitch-checkbox" id="has_outurl">
+                      <label class="onoffswitch-label" for="has_outurl"> 
+                      	<span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> 
+                      </label>
+                    </div>
+                  </div>
+                  <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 开启后可以通过 http://域名/index.php?m=index&c=插件标识&a=方法 进行访问</span>
+              </div>
+            </div> 
+            <div class="form-group">
+              <label class="col-sm-2 control-label">是否有后台菜单：</label>
+              <div class="col-sm-6">
+                  <div class="switch" style="margin-top:7px;">
+                    <div class="onoffswitch">
+                      <input type="checkbox" name="has_adminmenu" value="1" class="onoffswitch-checkbox" id="has_adminmenu">
+                      <label class="onoffswitch-label" for="has_adminmenu"> 
+                      	<span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> 
+                      </label>
+                    </div>
+                  </div>
+                  <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 开启后会在系统左边菜单出现</span>
+              </div>
+            </div> 
+            <div class="form-group">
+              <label class="col-sm-2 control-label">选择钩子：</label>
+              <div class="col-sm-6">
+                 <select class="form-control" style="width:40%" name="hook[]" size="10" multiple="">
+                    <volist name="hooks" id="vo">
+                      <option value="{$vo.name}" title="{$vo.remark}">{$vo.name}</option>
+                    </volist>
+                 </select>
+                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 可多选</span>
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-3 col-sm-offset-2">
+                <button class="btn btn-primary" type="submit">创建插件</button>
+                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#precode_div" onClick="preview()">预览插件</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal inmodal fade" id="precode_div" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title pre_title"></h4>
+        </div>
+        <div class="modal-body">
+         <textarea id="precode"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/switchery/switchery.js"></script> 
+<script src="$public/js/common.js"></script>
+<script src="$public/js/code/codemirror.js"></script> 
+<script src="$public/js/code/javascript.js"></script> 
+<script>
+var editor=null;
+editor=CodeMirror.fromTextArea(document.getElementById('precode'),{
+	lineNumbers:true,
+	matchBrackets:true,
+	styleActiveLine:true,
+	theme:"ambiance",
+});
+$("#has_config").click(function(){
+	var on=$(this).is(':checked');
+	if(on){
+		$('.hasconfig').show();   
+	}else{
+		$('#custom_config').val(''); 
+		$('.hasconfig').hide(); 	
+	}
+});
+//插件预览
+function preview(){
+	var title=$('#name').val();
+	$('.pre_title').text("预览插件"+title);
+	$.post('{:U("Addons/preview_addons")}', $('#commentForm').serialize(),function(data){
+		if(data){
+			editor.setValue(data);
+		}else{
+			return false;	
+		}
+	});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<temp file="header.html"/>
+<body class="home blog uimo ui-c3">
+<section class="container">
+  <temp file="left.html"/>
+  <div class="content-wrap">
+    <div class="content">
+      <header class="article-header">
+        <div class="breadcrumbs"><span class="text-muted">当前位置：</span><a href="{:caturl($catid)}">{:getCate($catid,'catname')}</a> <small>></small> <span class="text-muted">{$title}</span></div>
+        <h1 class="article-title"><a href="">{$title}</a></h1>
+        <ul class="article-meta">
+          <li>{$author} 发布于 {$time|date="Y-m-d",###}</li>
+          <li>分类：<a href="{:caturl($catid)}" rel="category tag">{:getCate($catid,'catname')}</a></li>
+          <li><span class="post-views">阅读({$views})</span></li>
+          <li>评论({$comments})</li>
+          <li></li>
+        </ul>
+      </header>
+      <article class="article-content">
+		{$content}
+        <p class="post-copyright">未经允许不得转载：<a href="{:caturl($catid)}">{:getCate($catid,'catname')}</a> &raquo; <a href="">{$title}</a></p>
+      </article>
+      <div class="article-social"> 
+        <if condition="$down"> 
+        <a href="{$down}" class="action action-down" target="_blank">
+      	<i class="glyphicon glyphicon-download-alt"></i>附件下载
+        </a> 
+        </if>
+      </div>
+      <div class="share-single">
+        <div class="action-share bdsharebuttonbox">
+         分享到： 
+         {$cfg['share']}
+         <a class="bds_more" data-cmd="more">更多</a> 
+         (<a class="bds_count" data-cmd="count" title="累计分享0次">0</a>) 
+        </div>
+		<script>
+        window._bd_share_config = {
+            common: {
+                "bdText": "",
+                "bdMini": "2",
+                "bdMiniList": false,
+                "bdPic": "",
+                "bdStyle": "0"
+            },
+            share: [{
+                bdCustomStyle: "{$ANSEL_URL}css/share.css"
+            }]
+        }
+        with(document) 0[(getElementsByTagName("head")[0] || body).appendChild(createElement("script")).src = "http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion=" + ~(-new Date() / 36e5)];
+        </script>
+      </div>
+      <div class="article-tags"> 标签：
+      <tag tag="$tags">
+      <a href="{$url}" rel="tag">{$tag}</a>
+      </tag>
+      </div>
+      <nav class="article-nav"> 
+          <span class="article-nav-prev">上一篇<br>
+          	<pre catid="$catid" id="$aid" msg="已经没有了">
+            <a href="{$url}" title="{$title}" rel="prev">{$title|str_cut=###,20}</a> 
+            </pre>
+          </span>
+          <span class="article-nav-next">下一篇<br>
+            <next catid="$catid" id="$aid" msg="已经没有了">
+            <a href="{$url}" title="{$title}" rel="next">{$title|str_cut=###,20}</a>
+            </next>
+          </span> 
+      </nav>
+      <div class="ads ads-content ads-related"></div> 
+      <div class="sticky">
+        <h3 class="title"><strong>热门推荐</strong></h3>
+        <ul>
+          <Ansel m="lists" catid="0" num="4" where="top {eq} 1" order="listorder desc"> 
+            <volist name="data" id="vo">
+              <li class="item"><a target="_blank" href="{$vo.url}"><img data-original="{$vo['thumb'][0]}" class="thumb" width="100%"/>{$vo.title|str_cut=###,20}</a></li>
+            </volist>
+          </Ansel>
+        </ul>
+      </div>
+      <div class="ads ads-content ads-comment"></div>
+      <h3 class="title" id="comments">
+        <div class="text-muted pull-right"> </div>  
+        <strong>评论 <b> {$comments} </b></strong> 
+        <if condition="empty($user)">
+        	请登录后评论
+        </if>
+      </h3>
+      <if condition="$user">
+      <div id="respond" class="no_webshot">
+        <form action="{:U('Index/Index/comments')}" method="post" id="up_comment">
+          <div class="comt-title">
+            <div class="comt-avatar"> <img data-original="{$user['avatar']}" class="avatar avatar-100" height="100" width="100"> </div>
+            <div class="comt-author"> </div>
+            <a id="cancel-comment-reply-link" href="javascript:;">取消</a> </div>
+          <div class="comt">
+            <div class="comt-box">
+              <textarea placeholder="留下你的意见吧!!" class="input-block-level comt-area" name="comment" id="comment" cols="100%" rows="3" tabindex="1" ></textarea>
+              <div class="comt-ctrl">
+                <div class="comt-tips">
+                  <input type="hidden" name="comment_parent" id="comment_parent" value="0" />
+                  <input type="hidden" name="article_id" id="article_id" value="{$aid}" />
+                </div>
+                <button type="submit" name="submit" id="submit" tabindex="5"><i class="icon-ok-circle icon-white icon12"></i> 提交评论</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div id="postcomments">
+          <ol class="commentlist">
+            <li class="comment even thread-even depth-1" id="comment-70"> 
+              <div class="c-avatar">
+              <img data-original="" class="avatar avatar-100" src="https://secure.gravatar.com/avatar/c28ad1a3695f65246c73f00066c5b152" style="display: block;" height="100" width="100">
+              </div>
+              <div class="c-main" id="div-comment-70"><span class="c-author">seo</span>哇，还是漂亮呢，如果这留言板做的再文艺一些就好了
+                <time class="c-time">1年前 (2015-10-16)</time>
+                <a rel="nofollow" class="comment-reply-link" href="?replytocom=70#respond" onclick="" aria-label="回复给seo">回复</a>
+              </div>
+               <ul class="children" id="new_comm_1" style="display: block;">
+                <li class="comment even depth-2" id="comment-534">
+                  <div class="c-avatar"><img src="https://secure.gravatar.com/avatar/3757285a6c3d8ad8ce820fcdeac0098b" class="avatar avatar-100" height="100" width="100"></div>
+                  <div class="c-main" id="div-comment-534"><span class="c-author">cease</span>阿斯顿法师打发<span class="c-approved">待审核</span>
+                    <time class="c-time">刚刚</time>
+                  </div>
+                  <span id="success_1"></span><span></span> </li>
+              </ul>
+            </li>
+          </ol>
+          <div class="pagenav"> </div>
+        </div>
+      </if>
+    </div>
+  </div>
+  <temp file="sidebar.html"/>
+  <temp file="footer.html"/>
+</section>
+<temp file="foot.html"/>

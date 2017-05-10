@@ -1,0 +1,31 @@
+body { background: #fff;font: 14px Helvetica Neue,Helvetica,PingFang SC,微软雅黑,Tahoma,Arial,sans-serif;}
+.ok{display:inline-block}
+.no{display:inline-block}
+.no img{width:23px;height:23px;}
+.layui-elem-quote{border-left:5px solid #1FAEFF !important}
+
+.header { background: #1FAEFF; height: 60px; width: 100%; position: fixed; left: 0; top: 0; z-index: 999 }
+.head { width: 1000px; margin: auto; height: 60px; height: 60px; }
+.head .logo { float: left; overflow: hidden }
+.logo a { display: block }
+.logo a img { height: 40px; margin: 10px 0; }
+.step_div { overflow: hidden; float: left; margin-left: 50px; }
+.step_div ul li { float: left; width: 150px; height: 60px; line-height: 60px; text-align: center; color: #fff; font-size: 18px; cursor: pointer }
+.step_div ul li.cur { background: #fff;color:#1FAEFF}
+.info { overflow: hidden; margin: 20px auto; width: 1000px; margin-top: 55px; font-size: 15px; }
+.info h2 { font-size: 20px; margin-bottom: 25px; }
+.info p { font-size: 14px; line-height: 30px; }
+
+.step_sub{text-align:center;height:70px;}
+.step_sub a, .sub{ color: #fff; padding: 9px 18px; background: #1FAEFF; border-radius: 2px; margin-top: 20px; display: inline-block;}
+.step_sub a.last{background:#ccc;}
+.step_sub a:hover{color:#fff;opacity:.8;filter:alpha(opacity=80)}
+.sub {height: 39px;vertical-align: top; cursor:pointer;border:none}
+
+.info h2{font-size:20px;margin:20px 0}
+.info h3{font-size:16px;margin:20px 0 10px 0;color:#FF5722}
+.info p{font-size:14px;line-height:28px;margin-bottom:10px}
+.info tr{border:1px solid #EAEAEA}
+.info tr th{border-left:1px solid #EAEAEA;background:#F9F9F9;line-height:45px}
+.info tr td{border-left:1px solid #EAEAEA;line-height:40px;}
+.info .center{text-align:center}

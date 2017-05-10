@@ -1,0 +1,46 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"> <include file="Public/nav"/> </div>
+        <div class="ibox-content">
+          <form class="form-horizontal m-t" action="{:U('Tag/del')}" method="post" id="commentForm">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="text-align:center;width:1%"> <input type="checkbox" class="i-checks" id="chkall"></th>
+                  <th>标签</th>
+                  <th>文章</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <volist name="data['list']" id="vo">
+                  <tr class="float-e-margins">
+                  	<td style="text-align:center;width:1%"><input type="checkbox" id="ck_id" class="i-checks" name="id[]"  value="{$vo.id}"></td>
+                    <td>{$vo.tag}</td>
+                    <td>{$vo.title}</td>
+                    <td><a href="{:U('Tag/del',array('id'=>$vo['id']))}" class="btn mg0 btn-danger btn-xs J_del"><i class="fa fa-times"></i> 删除</a></td>
+                  </tr>
+                </volist>
+              </tbody>
+            </table>
+            {$data['page']}
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-3">
+                <button class="btn btn-primary" type="submit">删除选择</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script>
+<script src="$public/js/common.js"></script> 
+<include file="Public/footer"/>
+</body></html>

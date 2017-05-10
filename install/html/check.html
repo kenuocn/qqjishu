@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ansel-安装程序</title>
+<link rel="stylesheet" href="css/install.css">
+<link rel="stylesheet" href="../statics/js/layui/css/layui.css">
+<script src="../statics/js/jquery.js"></script>
+<script src="../statics/js/layui/layui.js"></script>
+</head>
+<body>
+<div class="header">
+  <div class="head">
+    <div class="logo"><a href="../install/index.php"><img src="img/logo.png" alt="Ansel系统"></a></div>
+    <div class="step_div">
+      <ul>
+        <li class="step">1 安装协议</li>
+        <li class="step cur">2 环境检测</li>
+        <li class="step">3 创建数据</li>
+        <li class="step">4 安装完成</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="info">
+  <h2>环境检测：</h2>
+  <table width="100%" class="center">
+    <tr>
+      <th width="25%">环境检测</th>
+      <th width="25%">推荐配置</th>
+      <th width="25%">当前状态</th>
+      <th width="25%">最低要求</th>
+    </tr>
+    <tr>
+      <td>操作系统</td>
+      <td>类UNIX</td>
+      <td><div class="ok"><img src="img/ok.png"></div> <?php echo PHP_OS; ?></td>
+      <td>不限制</td>
+    </tr>
+    <tr>
+      <td>PHP版本</td>
+      <td>> 5.3.x</td>
+      <td><div class="ok"><img src="img/ok.png"></div> <?php echo PHP_VERSION ?></td>
+      <td>5.3.0</td>
+    </tr>
+    <tr>
+      <td>MySQL版本</td>
+      <td>> 5.x.x</td>
+      <td>
+      <?php if (function_exists('mysql_connect')): ?>
+      <?php $err=0;$err++ ;?>
+      	<div class="ok"><img src="img/ok.png"></div> 已安装
+      <?php else: ?>
+      	<div class="no"><img src="img/no.png"></div> 出现错误
+      <?php endif; ?>
+      </td>
+      <td>5.2</td>
+    </tr>
+    <tr>
+      <td>附件上传</td>
+      <td>> 2M</td>
+      <td>
+      <?php if (ini_get('file_uploads')): ?>
+      <?php $err++ ;?>
+      	<div class="ok" style="padding-right: 27px;"><img src="img/ok.png"></div><?php echo ini_get('upload_max_filesize');?>
+      <?php else: ?>
+      	 <div class="no"><img src="img/no.png"></div> 禁止上传
+      <?php endif; ?>
+      </td>
+      <td>不限制</td>
+    </tr>
+    <tr>
+      <td>SESSION</td>
+      <td>开启</td>
+      <td>
+      <?php if (function_exists('session_start')): ?>
+      <?php $err++ ;?>
+      	<div class="ok" style="padding-right:10px;"><img src="img/ok.png"></div> 支持
+      <?php else: ?>
+      	<div class="no"><img src="img/no.png"></div> 不支持
+      <?php endif; ?>
+      </td>
+      <td>开启</td>
+    </tr>
+  </table>
+  <h2>函数支持检测：</h2>
+  <table width="100%" class="center">
+    <tr>
+      <th>环境检测</th>
+      <th width="25%">当前状态</th>
+      <th width="25%">最低要求</th>
+    </tr>
+    <tr>
+      <td>mb_strlen</td>
+      <td>
+      <?php if (function_exists('mb_strlen')): ?>
+      <?php $err++ ;?>
+      	<div class="ok"><img src="img/ok.png"></div> 支持
+      <?php else: ?>
+      	<div class="no"><img src="img/no.png"></div> 不支持
+      <?php endif; ?>
+      </td>
+      <td><div class="ok"><img src="img/ok.png"></div>支持</td>
+    </tr>
+    <tr>
+      <td>curl_init</td>
+      <td>
+      <?php if (function_exists('curl_init')): ?>
+      <?php $err++ ;?>
+      	<div class="ok"><img src="img/ok.png"></div> 支持
+      <?php else: ?>
+      	<div class="no"><img src="img/no.png"></div> 不支持
+      <?php endif; ?>
+      </td>
+      <td><div class="ok"><img src="img/ok.png"></div> 支持</td>
+    </tr>
+  </table>
+  <h2>目录权限：</h2>
+  <table width="100%">
+    <tr>
+      <th style="padding-left:20px;">目录、文件权限检查</th>
+      <th width="25%">写入</th>
+      <th width="25%">读取</th>
+    </tr>
+    <tr>
+      <td style="padding-left:195px;">../</td>
+      <td style="text-align:center;">
+      <?php if (is_writable('../')): ?>
+      <?php $err++ ;?>
+        <div class="ok"><img src="img/ok.png"></div> 可写
+      <?php else: ?>
+        <div class="no"><img src="img/no.png"></div> 不可写
+      <?php endif ?>
+      </td>
+      <td style="text-align:center;">
+      <?php if (is_readable('../')): ?>
+      <?php $err++ ;?>
+        <div class="ok"><img src="img/ok.png"></div> 可读
+      <?php else: ?>
+        <div class="no"><img src="img/no.png"></div> 不可读
+      <?php endif ?>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:195px;">../d/</td>
+      <td style="text-align:center;">
+      <?php if (is_writable('../d/')): ?>
+      <?php $err++ ;?>
+        <div class="ok"><img src="img/ok.png"></div> 可写
+      <?php else: ?>
+        <div class="no"><img src="img/no.png"></div> 不可写
+      <?php endif ?>
+      </td>
+      <td style="text-align:center;">
+      <?php if (is_readable('../d/')): ?>
+      <?php $err++ ;?>
+        <div class="ok"><img src="img/ok.png"></div> 可读
+      <?php else: ?>
+        <div class="no"><img src="img/no.png"></div> 不可读
+      <?php endif ?>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:195px;">../install/</td>
+      <td style="text-align:center;">
+      <?php if (is_writable('../install/')): ?>
+      <?php $err++ ;?>
+        <div class="ok"><img src="img/ok.png"></div> 可写
+      <?php else: ?>
+        <div class="no"><img src="img/no.png"></div> 不可写
+      <?php endif ?>
+      </td>
+      <td style="text-align:center;">
+      <?php if (is_readable('../install/')): ?>
+      <?php $err++ ;?>
+        <div class="ok"><img src="img/ok.png"></div> 可读
+      <?php else: ?>
+        <div class="no"><img src="img/no.png"></div> 不可读
+      <?php endif ?>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:195px;">../Ansel/Common/Conf/</td>
+      <td style="text-align:center;">
+      <?php if (is_writable('../Ansel/Common/Conf/')): ?>
+      <?php $err++ ;?>
+        <div class="ok"><img src="img/ok.png"></div> 可写
+      <?php else: ?>
+        <div class="no"><img src="img/no.png"></div> 不可写
+      <?php endif ?>
+      </td>
+      <td style="text-align:center;">
+      <?php if (is_readable('../Ansel/Common/Conf/')): ?>
+      <?php $err++ ;?>
+        <div class="ok"><img src="img/ok.png"></div> 可读
+      <?php else: ?>
+        <div class="no"><img src="img/no.png"></div> 不可读
+      <?php endif ?>
+      </td>
+    </tr>
+  </table>
+  <div class="step_sub">
+     <a href="./index.php?step=index" class="last">上一步</a>
+     <a href="javascript:;" onclick="check()">下一步</a>
+  </div>
+</div>
+<script>
+function check(){
+	var errSum = <?php echo $err ?>;
+	if(errSum!=13){
+		$('a.next').addClass('btn_old').click(function(){
+			alert('环境检测不通过，无法进行下一步！');
+			return false;
+		});
+	}else{
+		location.href='./index.php?step=create';
+	}
+}
+
+</script>
+</body>
+</html>

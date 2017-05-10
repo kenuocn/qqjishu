@@ -1,0 +1,3 @@
+<?php
+//000000000000a:23:{s:3:"web";s:1:"1";s:6:"webtip";s:19:"站点升级中....";s:9:"Animation";s:6:"fadeIn";s:12:"Operationlog";s:1:"1";s:9:"loginglog";s:1:"1";s:5:"title";s:5:"Ansel";s:8:"keywords";s:5:"Ansel";s:7:"content";s:5:"Ansel";s:3:"icp";s:20:"蜀ICP备15013210号";s:9:"copyright";s:20:"© 2017 Ansel-博客";s:6:"author";s:5:"Ansel";s:17:"article_copyright";s:95:"本文为Ansel原创文章,转载无需和我联系,但请注明来自Ansel博客www.95ansel.cc";s:7:"ThemePc";s:7:"qqjishu";s:11:"ThemeMobile";s:7:"default";s:9:"mail_type";s:1:"1";s:8:"ismobile";s:1:"1";s:11:"mail_server";s:11:"smtp.qq.com";s:9:"mail_port";s:2:"25";s:9:"mail_from";s:17:"1402992668@qq.com";s:9:"mail_auth";s:1:"1";s:9:"mail_user";s:17:"1402992668@qq.com";s:13:"mail_password";s:16:"dwhybkpkuocuiihd";s:10:"mail_fname";s:5:"yicms";}
+?>

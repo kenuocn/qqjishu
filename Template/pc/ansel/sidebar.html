@@ -1,0 +1,99 @@
+<aside class="sidebar">
+  <div class="widget widget_textads">
+    <a class="style02" href="{$cfg['adurl']}" target="_blank"><strong>热门主题</strong>
+    <h2>{$cfg['adtitle']}</h2>
+    <p>{$cfg['adinfo']}</p>
+    </a>
+  </div>
+  <div class="widget widget_loginbox">
+  <if condition="$user">
+  	<div class="card hovercard">
+        <div class="cardheader"><img alt="{$user['username']}" src="{$ANSEL_URL}images/bg1.jpg"></div>
+        <div class="avatar"><img alt="{$user['username']}" src="{$user['avatar']}"></div>
+        <div class="info">
+            <div class="title">{$user['username']}</div>
+            <div class="desc">{$user['sign']}</div>
+        </div>
+        <div class="bottom">
+            <a class="" href="{:U('/logout/')}"><i class="fa fa-sign-out"></i> 退出当前账号</a>
+            <a class="" target="_blank" href="{:U('index/user/user')}"><i class="fa fa-user"></i> 进入会员中心</a>
+        </div>
+    </div>
+    <else/>
+    <div class="layui-tab layui-tab-brief">
+      <ul class="layui-tab-title">
+        <li class="layui-this">登陆</li>
+        <li>注册</li>
+      </ul>
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+        	<form method="post" class="login-form" id="login-form" action="{:U('index/user/login')}" >
+            	<label class="control-label">账号：</label>
+            	<input class="form-control" name="username" id="login-uname" type="text" placeholder="用户名/邮箱" value="" required>
+                <label class="control-label">密码：</label>
+                <input class="form-control" name="password" id="login-pwd" type="password" placeholder="密码" value="" required>
+                <input class="btn login-btn btn-block" onClick="login(this)" type="button" value="登陆">
+            </form>
+            <div class="login-error"></div>
+        </div>
+        <div class="layui-tab-item">
+        	<form method="post" class="login-form" id="reg-form" action="{:U('/reg/')}" >
+            	<label class="control-label">账号：</label>
+            	<input class="form-control" name="username" id="reg-uname" type="text" placeholder="字母+数字组合" value="" autocomplete="off" required>
+                <label class="control-label">邮箱：</label>
+            	<input class="form-control" name="email" id="reg-email" type="email" placeholder="请输入邮箱" value="" autocomplete="off" required>
+                <label class="control-label">验证码：</label>
+                <input class="form-control email-code" name="email_code" id="reg-email-code" type="text" autocomplete="off" placeholder="邮箱验证码">
+                <input class="btn btn-send" type="button" onClick="sends.send(this);" value="发送验证码">
+                <label class="control-label">密码：</label>
+                <input class="form-control" name="password" id="reg-pwd" type="password" placeholder="密码" autocomplete="off" value="" required>
+                <input class="btn login-btn btn-block" onClick="reg(this)" type="button" value="注册">
+            </form>
+            <div class="reg-error"></div>
+        </div>
+      </div>
+    </div>
+    </if>
+  </div>
+  <div class="widget widget_searchbox">
+    <h3 class="title"><strong>搜索</strong></h3>
+    <form method="get" class="search-form" action="{:U('/search/')}" >
+      <input type="hidden" name="m" value="Index">
+      <input type="hidden" name="c" value="index">
+      <input type="hidden" name="a" value="search">
+      <input class="form-control" name="skey" type="text" placeholder="输入关键字" value="{$skey}">
+      <input class="btn" type="submit" value="搜索">
+    </form>
+  </div>
+  <div class="widget widget_postlist">
+    <h3 class="title"><strong>随机推荐</strong></h3>
+    <ul class="items-01">
+    <Ansel m="lists" catid="0" num="4" order="'rand()'"> 
+      <volist name="data" id="vo">
+      <li><a target="_blank" href="{$vo.url}"><span class="thumbnail"><img data-original="{$vo['thumb'][0]}" class="thumb"/></span><span class="text">{$vo.title|str_cut=###,20}</span><span class="text-muted post-views">阅读({$vo.views})</span></a></li>
+      </volist>
+    </Ansel>
+   </ul>
+  </div>
+  <div class="widget widget_ads">
+    <div class="widget_ads_inner"><a href="{$cfg['addurl']}" target="_blank"><img src="{$cfg['addimg']}"></a></div>
+  </div>
+  <div class="widget widget_comments hide">
+    <h3 class="title"><strong>最新评论</strong></h3>
+    <ul>
+      <li>
+      <a target="_blank" href="" title=""><img data-original="https://secure.gravatar.com/avatar/17b6dfae86510c3fe0a2a2a409ac0dbc" class="avatar avatar-100" height="100" width="100">
+       admin <span class="text-muted">11个月前 (02-19)说：<br>是吗</span>
+      </a>
+      </li>
+    </ul>
+  </div>
+  <div class="widget widget_tags">
+    <h3 class="title"><strong>热门标签</strong></h3>
+    <ul class="widget_tags_inner">
+    <taglist num="30">
+      <li><a href="{$url}">{$tag}({$num})</a></li>
+    </taglist>
+    </ul>
+  </div>
+</aside>

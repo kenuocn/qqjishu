@@ -1,0 +1,55 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+        <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+          <h3 style="margin-bottom:20px;color:#000">当前目录：{$local}</h3>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>
+                文件
+                <if condition="$dir neq '' && $dir neq '.' "> 
+                  [ <a style="color:#f00;" href="{:U('File/index',array('dir'=>urlencode(str_replace(basename($dir).'-','',str_replace('/','-',$dir)))))}"><img src="$public/images/ext/dir.gif" />上一层目录</a> ]
+                </if>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+			<volist name="list" id="vo">
+              <tr>
+                <td>
+                <if condition=" '.'.getFileSuffix(basename($vo)) == '.php' or '.'.getFileSuffix(basename($vo)) == '.html' or '.'.getFileSuffix(basename($vo)) == '.js' or '.'.getFileSuffix(basename($vo)) == '.css'">
+                
+                <img src="{$FileExtList[$vo]}" />
+                <a href="{:U('File/edit',array('dir'=>urlencode(str_replace('/','-',$dir)),'file'=>basename($vo)))}">{$vo|basename}</a>
+                
+                <elseif condition="substr($FileExtList[$vo],-strlen($dirico))!=$dirico" />
+                
+                <img src="{$FileExtList[$vo]}" />{$vo|basename}
+                
+                <else />
+                
+            	<img src="{$FileExtList[$vo]}" />
+                <a href="{:U('File/index',array('dir'=>urlencode(str_replace('/','-',$dir).basename($vo).'-') ))}">{$vo|basename}</a>
+                
+                </if>
+                </td>
+              </tr>
+			</volist>
+            </tbody>
+          </table>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/common.js"></script>
+</body>
+</html> 

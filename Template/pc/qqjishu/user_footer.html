@@ -1,0 +1,84 @@
+<div class="foot foot-fix">
+    Copyright &copy; 免费QQ助手 鄂ICP备16019026号-2 | <a href="">站长统计</a>
+</div>
+<div class="mask"></div>
+<div class="dialog dialog-sign-in hide">
+    <h2 class="sign-in-ti ti-h2">
+		<i class="right fa fa-times-rectangle icon-close" id="sign_in_close"></i>
+		帐号登录
+	</h2>
+    <div class="item">
+        <span class="label">用户名</span>
+        <input type="text" placeholder="请输入用户名" id="sign_in_name">
+        <span class="error" id="error_in_name"></span>
+    </div>
+    <div class="item">
+        <span class="label">密码</span>
+        <input type="password" placeholder="请输入密码" id="sign_in_pwd">
+        <span class="error" id="error_in_pwd"></span>
+    </div>
+    <div class="item forget-pwd">
+        <a class="forget-pwd-btn">忘记密码?</a>
+    </div>
+    <div class="item">
+        <a class="sign-in-btn" id="sign_in_submit">登录</a><a class="sign-up-a" id="sign_in_a">立即注册</a>
+    </div>
+</div>
+<div class="dialog dialog-sign-up hide">
+    <h2 class="sign-in-ti ti-h2">
+		<i class="right fa fa-times-rectangle icon-close" id="sign_up_close"></i>
+		注册帐号
+	</h2>
+    <i class="icon-close"></i>
+    <div class="item">
+        <span class="label">QQ</span>
+        <input type="text" placeholder="请输入QQ号" id="sign_up_qq">
+        <span class="error" id="error_qq"></span>
+    </div>
+    <div class="item">
+        <span class="label">用户名</span>
+        <input type="text" placeholder="请输入用户名" id="sign_up_name">
+        <span class="error" id="error_name"></span>
+    </div>
+    <div class="item">
+        <span class="label">密码</span>
+        <input type="password" placeholder="请输入密码" id="sign_up_pwd">
+        <span class="error" id="error_pwd"></span>
+    </div>
+    <div class="item">
+        <span class="label">确认密码</span>
+        <input type="password" placeholder="请确认密码" id="sign_up_pwd_s">
+        <span class="error" id="error_pwd_s"></span>
+    </div>
+    <div class="item">
+        <span class="label">验证码</span>
+        <input type="password" placeholder="请输入验证码" id="auth_code" class="authcode"><img src="authcode.php" alt="看不清楚，换一张" class="authcode-img" id="auth_code_img">
+        <span class="error" id="error_pwd_s"></span>
+    </div>
+    <div class="item">
+        <a class="sign-in-btn" id="sign_up_submit">立即注册</a><a class="sign-up-a" id="sign_up_a">已有帐号？立即登录</a>
+    </div>
+</div>
+<!-- <div class="dialog dialog-tip" id="dialog_tip">注册成功</div> -->
+<script src="js/qq.js"></script>
+<script>
+var checkInBtn = $dom('check_in_btn');
+if (checkInBtn) {
+    checkInBtn.onclick = function() {
+        $http('check_in.php', '', 'POST', function(data) {
+            // console.log(data);
+            // return;
+            var obj = JSON.parse(data);
+            if (obj.status == 1) {
+                checkInBtn.textContent = '今日已签到';
+                checkInBtn.classList.add('checked-in');
+                var checkInCount = $dom('ci_count');
+                checkInCount.textContent = parseInt(checkInCount.textContent) + 1;
+            }
+            showtip(obj.msg);
+        });
+    }
+}
+</script>
+</body>
+</html>

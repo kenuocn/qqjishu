@@ -1,0 +1,61 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"> <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+          <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">是否启用：</label>
+              <div class="col-sm-4">
+                <div class="radio radio-info radio-inline">
+                  <input type="radio" id="status1" value="1" name="status" <if condition="$info['status'] eq 1">checked</if> required>
+                  <label for="status1">启用</label>
+                </div>
+                <div class="radio radio-inline">
+                  <input type="radio" id="status2" value="0" name="status" <if condition="$info['status'] eq 0">checked</if>>
+                  <label for="status2">禁用</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">规则标识：</label>
+              <div class="col-sm-4">
+                <input type="text" name="name" step="1" value="{$info['name']}" class="form-control" required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 示例：Admin/Index/home</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">规则名称：</label>
+              <div class="col-sm-4">
+                <input type="text" name="title" value="{$info['title']}" class="form-control" placeholder="用以区分规则" required aria-required="true">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 必须填写</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">附加条件：</label>
+              <div class="col-sm-4">
+                <input type="text" name="condition" value="{$info['condition']}" placeholder="按钮、积分" class="form-control">
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 示例：{score}>50 and {score}<200</span> 
+              </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="form-group">
+              <div class="col-sm-3 col-sm-offset-2">
+              	<input type="hidden" name="id" value="{$info.id}">
+                <button class="btn btn-primary" type="submit"><if condition="$info['id']">保存修改<else/>添加规则</if></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script>
+</body>
+</html>

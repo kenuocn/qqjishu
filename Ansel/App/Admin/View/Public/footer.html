@@ -1,0 +1,15 @@
+<script src="$public/js/icheck.js"></script> 
+<script>
+$(document).ready(function(){
+	$(".i-checks").iCheck({
+		checkboxClass:"icheckbox_square-green",
+		radioClass:"iradio_square-green",
+	})
+	$('#chkall').on('ifChecked', function(event){
+		$('input#ck_id').iCheck('check');
+	});
+	$('#chkall').on('ifUnchecked', function(event){
+		$('input#ck_id').iCheck('uncheck');
+	});
+});
+</script>

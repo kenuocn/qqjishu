@@ -1,0 +1,115 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+<div class="row">
+  <div class="col-sm-12">
+    <div class="ibox float-e-margins">
+      <div class="ibox-content">
+        <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+          <div class="tabs-container">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#tab-caidan" aria-expanded="true">菜单权限</a></li>
+              <li><a data-toggle="tab" href="#tab-custom" aria-expanded="false">自定义权限</a> </li>
+            </ul>
+            <div class="tab-content">
+              <div id="tab-caidan" class="tab-pane active">
+                <div class="panel-body">
+                  <ul id="treeDemo" class="ztree"></ul>
+                </div>
+              </div>
+              <div id="tab-custom" class="tab-pane">
+                <div class="panel-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th style="width:10%;text-align:center;">选择</th>
+                        <th style="width:90%">名称</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <volist name="auth" id="vo">
+                        <tr>
+                          <td style="width:10%;text-align:center;"><input type="checkbox" class="i-checks" id="chkall" name="checkid" value="{$vo.id}" <if condition="$vo['checked']">checked</if>></td>
+                          <td>{$vo.title}</td>
+                      </volist>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" value="{$gid}" name="gid">
+            <button class="btn btn-primary" type="button" style="margin-top:20px;margin-left:20px;" onClick="GetCheckedAll('{$gid}')">保存权限</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<link href="$public/js/ztree/zTreeStyle.css" rel="stylesheet" type="text/css">
+<script src="$public/js/ztree/ztree.js"></script>
+<script src="$public/js/ztree/ztree.excheck.js"></script>
+<script src="$public/js/validate/validate.js"></script> 
+<script src="$public/js/validate/messages.js"></script> 
+<script src="$public/js/common.js"></script> 
+<script src="$public/js/icheck.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".i-checks").iCheck({
+            checkboxClass:"icheckbox_square-green",
+            radioClass:"iradio_square-green"
+        });
+        $("input[name='controller']").on('ifChecked', function(event){
+            $('input#'+this.value+'_action').iCheck('check');
+        });
+        $("input[name='controller']").on('ifUnchecked', function(event){
+            $('input#'+this.value+'_action').iCheck('uncheck');
+        });
+    });
+    var setting = {
+        check: {
+            enable: true,
+            chkboxType:{ "Y" : "ps", "N" : "ps" }
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pid",
+            }
+        }
+    };
+    var zNodes ={$json};
+    $(function(){
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.expandAll(true);
+    });
+    //获取所有选中节点的值
+    function GetCheckedAll(gid) {
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        var nodes = treeObj.getCheckedNodes(true);
+        var menuid = "";
+        for (var i = 0; i < nodes.length; i++) {
+            menuid += nodes[i].id+",";
+        }
+        var ruleid=[];
+        $('input[name="checkid"]:checked').each(function(){
+            ruleid.push($(this).val());
+        });
+
+        $.ajax({
+            url : "{:U('Group/auth')}",
+            type : "post",
+            dataType : "json",
+            data: {menuid:menuid,ruleid:ruleid,gid:gid},
+            success : function(res) {
+                if(res.status) {
+                    layer.msg(""+res.info+"....",{icon:1,time:1000});
+                } else {
+                    layer.alert(res.info,{title:'错误提示',icon:0});
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<include file="Public/header"/>
+<div class="wrapper wrapper-content animated {:C('Animation')}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <include file="Public/nav"/>
+        </div>
+        <div class="ibox-content">
+          <form class="form-horizontal m-t" action="" method="post" id="commentForm">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th style="text-align:center">ID</th>
+                <th style="text-align:center">规则标识</th>
+                <th style="text-align:center">规则描述</th>
+                <th style="text-align:center">附加条件</th>
+                <th style="text-align:center;">状态</th>
+                <th style="text-align:center;">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <volist name="data['list']" id="vo">
+                <tr>
+                  <td style="text-align:center">{$vo.id}</td>
+                  <td style="text-align:center">{$vo.name}</td>
+                  <td style="text-align:center">{$vo.title|default="无规则描述"}</td>
+                  <td style="text-align:center">{$vo.condition|default="无"}</td>
+                  <td style="text-align:center;">
+                    <if condition="$vo['status'] eq 1">
+                      <a class="J_alink btn mg0 btn-info btn-xs" href="{:U('Auth/status',array('id'=>$vo['id'],'status'=>0))}">正常</a>
+                      <else/>
+                      <a class="J_alink btn mg0 btn-danger btn-xs" href="{:U('Auth/status',array('id'=>$vo['id'],'status'=>1))}">禁用</a>
+                    </if>
+                  </td>
+                  <td style="text-align:center;">
+                    <a href="{:U('Auth/edit',array('id'=>$vo['id']))}" class="btn mg0 btn-primary btn-xs"><i class="fa fa-paste"></i> 编辑</a>
+                    <a href="{:U('Auth/del',array('id'=>$vo['id']))}" class="btn mg0 btn-danger btn-xs J_del"><i class="fa fa-times"></i> 删除</a>
+                  </td>
+                </tr>
+              </volist>
+              </tbody>
+            </table>
+            {$data['page']}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="$public/js/validate/validate.js"></script>
+<script src="$public/js/validate/messages.js"></script>
+<script src="$public/js/common.js"></script>
+</body>
+</html> 
